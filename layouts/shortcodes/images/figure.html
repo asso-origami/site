@@ -1,0 +1,23 @@
+<figure class="">
+  {{ partial "images/img_logic.html" (dict 
+    "context" . 
+    "name" (.Get "name") 
+    "src" (.Get "src") 
+    "alt" (.Get "alt") 
+    "sizes" (.Get "sizes")
+    "class" (.Get "class")
+    "aos" (.Get "aos")
+    "duration" (.Get "duration")
+    "easing" (.Get "easing")
+    "loading" (.Get "loading")
+    "fetchpriority" (.Get "fetchpriority")
+    
+  ) }}
+  
+  {{/* On garde la légende ici car elle est spécifique au format "figure" */}}
+  {{- if or (.Get "caption") -}}
+    <figcaption class="text-center mt-3 text-gray-700 italic text-sm">
+      {{ .Get "caption" }}
+    </figcaption>
+  {{- end -}}
+</figure>

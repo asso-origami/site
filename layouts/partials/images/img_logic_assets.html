@@ -1,0 +1,72 @@
+{{- /*
+  Partial: img_logic_assets.html
+  
+  Traite les images depuis le dossier assets/ (au lieu des page resources)
+  
+  Paramètres:
+  - src: Chemin de l'image dans assets/ (ex: "images/accueil/saint-antonin.jpg")
+  - alt: Texte alternatif
+  - sizes: Attribut sizes (défaut: "(min-width: 1024px) 50vw, (min-width: 768px) 75vw, 100vw")
+  - class: Classes CSS (défaut: "w-full h-auto")
+  - loading: lazy (défaut) ou eager
+  - fetchpriority: auto (défaut), high, low
+  - aos: Animation AOS (optionnel)
+  - duration: Durée animation (optionnel)
+  - easing: Easing animation (optionnel)
+*/ -}}
+
+{{- $img := "" -}}
+{{- $alt := .alt | default "" -}}
+{{- $sizes := .sizes | default "(min-width: 1024px) 50vw, (min-width: 768px) 75vw, 100vw" -}}
+{{- $widths := slice 320 480 640 768 960 1280 1600 -}}{{/* ✅ CORRIGÉ : était 768960 (typo, virgule manquante) */}}
+{{- $class := .class | default "w-full h-auto" -}}
+{{- $aos := .aos | default "" -}}
+{{- $duration := .duration | default "" -}}
+{{- $easing := .easing | default "" -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $fetchpriority := .fetchpriority | default "auto" -}}
+
+{{/* Si fetchpriority=high, forcer loading=eager (sinon conflit d'attributs) */}}
+{{- if eq $fetchpriority "high" -}}
+  {{- $loading = "eager" -}}
+{{- end -}}
+
+{{/* Récupérer l'image depuis assets/ */}}
+{{- if .src -}}
+  {{- $img = resources.Get .src -}}
+{{- end -}}
+
+{{- if $img -}}
+  {{- $fallback := $img.Resize "960x jpg q78" -}}
+  <picture>
+    <source 
+      type="image/webp" 
+      srcset="{{ range $widths }}{{ if ge $img.Width . }}{{ with $img.Resize (printf "%dx webp q72" .) }}{{ .RelPermalink }} {{ .Width }}w, {{ end }}{{ end }}{{ end }}" 
+      sizes="{{ $sizes }}"
+    >
+    <source 
+      type="image/jpeg" 
+      srcset="{{ range $widths }}{{ if ge $img.Width . }}{{ with $img.Resize (printf "%dx jpg q78" .) }}{{ .RelPermalink }} {{ .Width }}w, {{ end }}{{ end }}{{ end }}" 
+      sizes="{{ $sizes }}"
+    >
+    <img 
+      src="{{ $fallback.RelPermalink }}" 
+      width="{{ $fallback.Width }}" 
+      height="{{ $fallback.Height }}" 
+      alt="{{ $alt }}" 
+      loading="{{ $loading }}"
+      fetchpriority="{{ $fetchpriority }}"
+      decoding="async"{{/* ✅ CORRIGÉ : decoding=sync bloquait le thread principal sur mobile */}}
+      class="{{ $class }}"
+      {{- if $aos }} data-aos="{{ $aos }}" 
+        {{- if $duration }} data-aos-duration="{{ $duration }}" {{ end }}
+        {{- if $easing }} data-aos-easing="{{ $easing }}" {{ end }}
+      {{ end }}
+    >
+  </picture>
+{{- else -}}
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
+    <strong class="font-bold">Image non trouvée :</strong>
+    <span class="block sm:inline">{{ .src }}</span>
+  </div>
+{{- end -}}

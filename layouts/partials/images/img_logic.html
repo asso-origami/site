@@ -1,0 +1,99 @@
+{{- $img := "" -}}
+{{- $alt := .alt | default "" -}}
+{{- $context := .context -}}
+{{- $sizes := .sizes | default "(min-width: 1024px) 50vw, (min-width: 768px) 75vw, 100vw" -}}
+{{- $widths := slice 320 400 480 560 640 720 840 960 1080 1280 1600 -}}
+{{- $class := .class | default "w-full h-auto" -}}
+{{- $aos := .aos | default "" -}}
+{{- $duration := .duration | default "" -}}
+{{- $easing := .easing | default "" -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $fetchpriority := .fetchpriority | default "auto" -}}
+{{- $webpQuality := 72 -}}
+{{- $jpgQuality := 78 -}}
+
+{{/* Si fetchpriority=high, forcer loading=eager (sinon le navigateur ignore fetchpriority) */}}
+{{- if eq $fetchpriority "high" -}}
+  {{- $loading = "eager" -}}
+  {{- $webpQuality = 64 -}}
+  {{- $jpgQuality = 74 -}}
+{{- end -}}
+
+{{/* Logique de recherche d'image */}}
+{{- if .name -}}
+  {{- $img = $context.Page.Resources.GetMatch (printf "*%s*" .name) -}}
+{{- else if .src -}}
+  {{- $img = $context.Page.Resources.GetMatch .src -}}
+{{- end -}}
+
+{{/* Récupérer alt depuis l'image si non fourni */}}
+{{- if $img -}}
+  {{- if not $alt -}}
+    {{- with $img.Params -}}
+      {{- with .alt -}}
+        {{- $alt = . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and (not $alt) $img.Title -}}
+      {{- $alt = $img.Title -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $img -}}
+  {{- $fallback := $img.Resize "960x jpg q78" -}}
+
+  {{/*
+    OPTIMISATION LCP : si cette image est le LCP (fetchpriority="high"),
+    on enregistre les données pour émettre un <link rel="preload"> dans le <head>.
+    On utilise hugo.Store (scratch global, partagé entre tous les partials).
+    
+    Le preload cible la version ~640px (taille réelle sur mobile Moto G Power = ~412px CSS × DPR1).
+    On prend 640w pour couvrir jusqu'à DPR 1.5 sans surcharger.
+  */}}
+  {{- if eq $fetchpriority "high" -}}
+    {{- $preloadSrcset := "" -}}
+    {{- $preloadWebp := "" -}}
+    {{- range $widths -}}
+      {{- if ge $img.Width . -}}
+        {{- with $img.Resize (printf "%dx webp q%d" . $webpQuality) -}}
+          {{- $preloadWebp = printf "%s %s %dw," $preloadWebp .RelPermalink .Width -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- hugo.Store.Set "lcp_preload_srcset" $preloadWebp -}}
+    {{- hugo.Store.Set "lcp_preload_sizes" $sizes -}}
+    {{- hugo.Store.Set "lcp_preload_fallback" $fallback.RelPermalink -}}
+  {{- end -}}
+
+  <picture>
+    <source 
+      type="image/webp" 
+      srcset="{{ range $widths }}{{ if ge $img.Width . }}{{ with $img.Resize (printf "%dx webp q%d" . $webpQuality) }}{{ .RelPermalink }} {{ .Width }}w, {{ end }}{{ end }}{{ end }}" 
+      sizes="{{ $sizes }}"
+    >
+    <source 
+      type="image/jpeg" 
+      srcset="{{ range $widths }}{{ if ge $img.Width . }}{{ with $img.Resize (printf "%dx jpg q%d" . $jpgQuality) }}{{ .RelPermalink }} {{ .Width }}w, {{ end }}{{ end }}{{ end }}" 
+      sizes="{{ $sizes }}"
+    >
+    <img 
+      src="{{ $fallback.RelPermalink }}" 
+      width="{{ $fallback.Width }}" 
+      height="{{ $fallback.Height }}" 
+      alt="{{ $alt }}" 
+      loading="{{ $loading }}"
+      fetchpriority="{{ $fetchpriority }}"
+      decoding="{{ if eq $fetchpriority "high" }}sync{{ else }}async{{ end }}"
+      class="{{ $class }}"
+      {{- if $aos }} data-aos="{{ $aos }}" 
+        {{- if $duration }} data-aos-duration="{{ $duration }}" {{ end }}
+        {{- if $easing }} data-aos-easing="{{ $easing }}" {{ end }}
+      {{ end }}
+    >
+  </picture>
+{{- else -}}
+  <p style="color: red; padding: 1rem; background: #fee; border: 1px solid #f00;">
+    ⚠️ Image non trouvée : {{ .name }}{{ .src }}
+  </p>
+{{- end -}}
