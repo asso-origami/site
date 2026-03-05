@@ -1,0 +1,38 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+
+<!-- Meta description -->
+{{ $description := .Description | default site.Params.description }}
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<meta name="author" content="{{ site.Params.author }}">
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ site.Params.image | absURL }}">
+<meta property="og:image:alt" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="{{ site.Title }}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ site.Params.image | absURL }}">
+<meta name="twitter:image:alt" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
+
+<!-- favicon -->
+<link rel="icon" href="/favicon/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">
+<!-- Stylesheets -->
+
+{{ with (templates.Defer (dict "key" "global")) }}
+    {{ partial "css.html" . }}
+{{ end }}

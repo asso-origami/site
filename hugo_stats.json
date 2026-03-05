@@ -1,0 +1,36 @@
+{
+  "htmlElements": {
+    "tags": [
+      "body",
+      "h1",
+      "head",
+      "header",
+      "html",
+      "link",
+      "main",
+      "meta",
+      "p",
+      "script",
+      "title"
+    ],
+    "classes": [
+      "bg-gray-50",
+      "bg-gray-700",
+      "dark:bg-gray-900",
+      "hidden",
+      "lg:block",
+      "lg:flex-1",
+      "lg:overflow-y-auto",
+      "lg:pb-24",
+      "lg:pt-20",
+      "p-4",
+      "pb-10",
+      "pt-8",
+      "text-center",
+      "text-white",
+      "uppercase",
+      "w-full"
+    ],
+    "ids": null
+  }
+}

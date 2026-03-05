@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@source "hugo_stats.json";
+
+/* ── Fontes auto-hébergées ── */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-300.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/space-grotesk-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/space-grotesk-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+}
+
+/* Vos styles de base */
+@layer base {
+  /* le body */
+  body {
+    @apply bg-gray-50 text-gray-700 px-1 md:px-2 font-sans leading-relaxed tracking-wide;
+  }
+
+  /* les titres */
+  h1 {
+    @apply text-2xl  font-semibold py-2 text-center;  
+    @apply md:text-3xl md:py-6;    
+    @apply lg:text-4xl lg:py-12;   
+    @apply xl:text-5xl xl:py-20;   
+    @apply 2xl:text-6xl 2xl:py-24;  
+  }
+  
+  h2 {
+    @apply text-2xl font-medium pt-3 pb-1.5;
+  }
+  h3 {
+    @apply text-xl font-medium py-1.5;
+  }
+  h4 {
+    @apply text-lg font-medium italic py-1.5;
+  }
+}

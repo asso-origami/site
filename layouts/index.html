@@ -1,0 +1,14 @@
+
+{{ define "main" }}
+
+
+  <main class="lg:flex-1 w-full lg:overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900">
+
+        {{ with .Params.h1}}
+            <h1 class=" hidden lg:block uppercase text-center pt-8 pb-10 lg:pt-20 lg:pb-24 bg-gray-700 text-white">{{ . }}</h1>
+        {{ end }}
+      {{ .Content }}
+
+  </main>
+
+{{ end }}

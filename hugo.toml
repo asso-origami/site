@@ -1,0 +1,40 @@
+baseURL = 'https://example.org/'
+languageCode = 'fr-fr'
+title = 'Origami — Association FabLab en Quercy Rouergue | Projets makers & créativité en Occitanie'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "friendly"  
+    lineNos = false
+    lineNumbersInTable = false
+  [markup.goldmark.parser]
+    autoHeadingID = true
+
+[build]
+  [build.buildStats]
+    enable = true
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+[module]
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'
+  # On monte tout le dossier node_modules dans le dossier virtuel assets/node_modules
+  [[module.mounts]]
+    source = "node_modules"
+    target = "assets/node_modules" 
+
+[params]
+  description = "Origami, association FabLab & Repair Café en Quercy Rouergue. Partagez vos projets DIY, trouvez de l'entraide et créez ensemble en Occitanie."
+  author = "Association Origami"
