@@ -1,0 +1,146 @@
+{{/* ============================================================
+  Shortcode : gallery.html
+  
+  Paramètres :
+    group       : (requis) valeur du paramètre "group" dans les resources
+                  ex: {{< gallery group="gite" >}}
+    
+    cols_sm     : nb de colonnes sur mobile       (défaut : 2)
+    cols_md     : nb de colonnes à partir de md   (défaut : 3)
+    cols_lg     : nb de colonnes à partir de lg   (défaut : 5)
+    
+    gap         : gap entre les images (défaut : 1)
+                  valeurs : 1, 2, 3, 4
+    
+  Exemple d'appel :
+    {{< gallery group="gite" cols_sm="2" cols_md="3" cols_lg="5" >}}
+  
+  Exemple dans _index.md (front matter) :
+    [[resources]]
+    src = "olivier-jardin-gite-cubane.jpg"
+    name = "olivier"
+    title = "L'olivier du jardin"
+    [resources.params]
+        alt   = "Olivier centenaire dans le jardin du gîte La Cubane"
+        group = "gite"
+  
+  ============================================================ */}}
+
+{{- $group   := .Get "group" -}}
+{{- $cols_sm := .Get "cols_sm" | default "2" -}}
+{{- $cols_md := .Get "cols_md" | default "3" -}}
+{{- $cols_lg := .Get "cols_lg" | default "5" -}}
+{{- $gap     := .Get "gap"     | default "1" -}}
+{{- $images  := where .Page.Resources "Params.group" $group -}}
+{{- $baseID  := printf "modal-gallery-%s-%d" $group now.Unix -}}
+
+{{/* Construction dynamique des classes Tailwind */}}
+{{- $grid_sm := printf "grid-cols-%s" $cols_sm -}}
+{{- $grid_md := printf "md:grid-cols-%s" $cols_md -}}
+{{- $grid_lg := printf "lg:grid-cols-%s" $cols_lg -}}
+{{- $gap_sm  := printf "gap-%s" $gap -}}
+{{- $gap_md  := printf "md:gap-%s" (add (int $gap) 2 | string) -}}
+
+{{/* Calcul du sizes pour srcset selon le nb de colonnes */}}
+{{- $sizes := printf "(min-width: 1024px) %dvw, (min-width: 768px) %dvw, %dvw"
+    (div 100 (int $cols_lg))
+    (div 100 (int $cols_md))
+    (div 100 (int $cols_sm)) -}}
+
+<section class="grid {{ $grid_sm }} {{ $grid_md }} {{ $grid_lg }} {{ $gap_sm }} {{ $gap_md }} px-1 md:px-4 py-1 md:py-4 bg-mycolor-300">
+
+  {{- range $idx, $img := $images -}}
+
+    {{- $alt     := .Params.alt     | default .Title | default "" -}}
+    {{- $caption := .Params.caption | default "" -}}
+    {{- $modalID := printf "%s-%d" $baseID $idx -}}
+
+    <figure class="relative overflow-hidden bg-mycolor-400 group">
+
+      {{/* Appel du partial img_logic avec la ressource déjà résolue */}}
+      {{- $fallback := $img.Resize "960x jpg" -}}
+      {{- $widths   := slice 320 640 960 -}}
+
+      <button
+        type="button"
+        data-modal-target="{{ $modalID }}"
+        data-modal-toggle="{{ $modalID }}"
+        aria-label="Ouvrir l'image en grand format"
+        class="w-full h-full block cursor-zoom-in">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="{{- range $widths -}}
+              {{- if ge $img.Width . -}}
+                {{- with $img.Resize (printf "%dx webp" .) -}}{{ .RelPermalink }} {{ .Width }}w, {{- end -}}
+              {{- end -}}
+            {{- end -}}"
+            sizes="{{ $sizes }}">
+          <source
+            type="image/jpeg"
+            srcset="{{- range $widths -}}
+              {{- if ge $img.Width . -}}
+                {{- with $img.Resize (printf "%dx jpg" .) -}}{{ .RelPermalink }} {{ .Width }}w, {{- end -}}
+              {{- end -}}
+            {{- end -}}"
+            sizes="{{ $sizes }}">
+          <img
+            src="{{ $fallback.RelPermalink }}"
+            width="{{ $fallback.Width }}"
+            height="{{ $fallback.Height }}"
+            alt="{{ $alt }}"
+            loading="lazy"
+            decoding="async"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        </picture>
+      </button>
+
+      {{- if $caption -}}
+      <figcaption class="
+        hidden md:block
+        absolute inset-x-0 bottom-0
+        opacity-0 group-hover:opacity-80
+        bg-mycolor-900 text-white text-center text-sm py-2
+        transition-opacity duration-300">
+        {{ $caption }}
+      </figcaption>
+      {{- end -}}
+
+    </figure>
+
+  {{- end -}}
+
+</section>
+
+{{- range $idx, $img := $images -}}
+  {{- $alt      := .Params.alt     | default .Title | default "" -}}
+  {{- $caption  := .Params.caption | default "" -}}
+  {{- $modalID  := printf "%s-%d" $baseID $idx -}}
+  {{- $largeImg := $img.Resize "1920x jpg" -}}
+  {{- $zoomImg  := $img.Resize "2560x jpg" -}}
+
+  <div id="{{ $modalID }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black/90">
+    <div class="relative p-4 w-full max-w-7xl max-h-full">
+      <div class="relative bg-transparent">
+        <button type="button" class="absolute -top-0 right-0 text-white bg-transparent hover:bg-gray-600 hover:text-white rounded-lg text-sm w-10 h-10 inline-flex justify-center items-center" data-modal-hide="{{ $modalID }}">
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+          <span class="sr-only">Fermer</span>
+        </button>
+        <div class="flex justify-center items-center">
+          <img src="{{ $largeImg.RelPermalink }}"
+               data-zoom-src="{{ $zoomImg.RelPermalink }}"
+               alt="{{ $alt }}"
+               class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+        </div>
+        {{- if or $img.Title $caption -}}
+          <div class="text-center mt-4 text-white">
+            {{- if $img.Title -}}<div class="text-lg font-semibold">{{ $img.Title }}</div>{{- end -}}
+            {{- with $caption -}}<div class="text-sm mt-1 opacity-90">{{ . }}</div>{{- end -}}
+          </div>
+        {{- end -}}
+      </div>
+    </div>
+  </div>
+{{- end -}}
