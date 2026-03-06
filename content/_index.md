@@ -60,14 +60,24 @@ title = "Un micro-ondes en panne ? On le répare !"
 {{< text/spaceLine >}}
 {{< cafe_bricole >}}
 {{< text/spaceLine >}}
-{{< images/gallery group="bricole" cols_sm="3" cols_md="3" cols_lg="3">}}
+{{< images/gallery group="bricole" cols_sm="3" cols_md="3" cols_lg="3" gap="1">}}
 
-{{< text/text_center_light >}}
+{{< text/text_center_light aos="zoom-in">}}
 ## Le saviez-vous : On peut vous aider !
 A réparer un objet domestique dont vous pensez vouloir être obligé de vous débarasser  
 S'il est réparable, amenez-le au Café Bricol' d'Origami ; des bénévoles vont tenter de vous aider à le sauver  
 <p class="text-xl font-medium p-2">Il suffit pour cela de vous rendre à La Fabrique Caylus (Z.A. Chirou à côté de la Salle des Fêtes) le 1<sup>er</sup>jeudi de chaque mois à 18 heures<p>
-Nous vous accueillerons avec un grand plaisir.  <br>
-N'hésitez surtout pas en vous rappelant que ce service associatif est totalement gracieux.  <br>
+Nous vous accueillerons avec un grand plaisir  <br>
+N'hésitez surtout pas en vous rappelant que ce service associatif est totalement gracieux  <br>
 <b>Atelier gratuit, adultes et enfants accompagnés</b>
 {{< /text/text_center_light >}}
+
+{{< text/spaceLine >}}
+
+{{< text/text_center_dark aos="fade-right">}}
+L'association Origami est née d'une conviction simple : les projets les plus beaux naissent souvent de la rencontre entre des esprits curieux et des mains volontaires.<br>
+Qu'il s'agisse de réparer une bicyclette, de fabriquer un composteur en bois de récupération, d'automatiser un potager avec un Raspberry Pi ou de développer un outil numérique au service d'une cause solidaire, Origami offre un espace où chacune et chacun peut venir chercher — et apporter — de l'aide.<br>
+Ici, le savoir-faire se partage sans hiérarchie : le bricoleur aguerri et la débutante curieuse, le développeur expérimenté et l'amateur passionné avancent ensemble, projet par projet. L'idée n'est pas de tout faire à la place de l'autre, mais de créer les conditions d'une collaboration réelle, où l'entraide devient le moteur de la réalisation.
+
+{{< /text/text_center_dark >}}
+{{< text/spaceLine >}}

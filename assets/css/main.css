@@ -1,3 +1,4 @@
+@import "../../node_modules/aos/dist/aos.css";
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @source "hugo_stats.json";
@@ -35,6 +36,25 @@
 }
 
 @theme {
+  --color-mycolor-0:   #E6EAE6;
+  --color-mycolor-50:  #D8DED8;
+  --color-mycolor-100: #CAD2CA;
+  --color-mycolor-200: #BDC6BD;
+  --color-mycolor-300: #AFBBAF;
+  --color-mycolor-400: #A2AFA2;
+  --color-mycolor-500: #94A394;
+  --color-mycolor-600: #879787;
+  --color-mycolor-700: #798C79;
+  --color-mycolor-800: #6C806C;
+  --color-mycolor-900: #5E745E;
+  --color-mycolor-950: #516951;
+
+  /* --color-mycolor: #f0fdf4; */
+  --color-mycolor: #94A394;
+
+  --color-myblack: #111827;
+  --color-mywhite: #ffffff;
+  
   --font-sans: "Inter", sans-serif;
   --font-display: "Space Grotesk", sans-serif;
 }

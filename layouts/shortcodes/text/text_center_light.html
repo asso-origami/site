@@ -1,7 +1,5 @@
-
-
-<div class="p-1 md:p-4">
-    <div class=" px-2 border border-yellow-300 py-4 md:py-6 lg:py-8 bg-gradient-to-r from-yellow-200 via-yellow-100 to-yellow-200 text-center text-black">
+<div class="py-1 md:py-4" {{ with .Get "aos" }}data-aos="{{ . }}"{{ end }}>
+    <div class=" px-2 border border-mycolor-300 py-4 md:py-6 lg:py-8 bg-gradient-to-r from-mycolor-200 via-mycolor-100 to-mycolor-200 text-center text-black">
     
          {{ .Inner | markdownify }} 
     

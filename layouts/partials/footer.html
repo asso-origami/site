@@ -1,0 +1,107 @@
+<footer class="bg-mycolor-100 text-myblack mt-2 mx-4  ">
+  <div class="max-w-6xl mx-auto px-4 py-10
+              grid grid-cols-1 gap-8
+              sm:grid-cols-3">
+
+    <!-- Colonne gauche : Navigation -->
+    <div class="flex flex-col gap-3">
+      <h3 class="font-semibold text-sm uppercase tracking-widest text-mycolor-500 mb-1">
+        Navigation
+      </h3>
+      <a href="#top"
+         class="text-sm hover:underline hover:text-mycolor-600 transition-colors">
+        ↑ Haut de page
+      </a>
+      <a href="{{ "/" | relURL }}"
+         class="text-sm hover:underline hover:text-mycolor-600 transition-colors">
+        Accueil
+      </a>
+      <a href="{{ "/contact" | relURL }}"
+         class="text-sm hover:underline hover:text-mycolor-600 transition-colors">
+        Contact
+      </a>
+    </div>
+
+    <!-- Colonne centrale : L'association -->
+    <div class="flex flex-col gap-3">
+      <h3 class="font-semibold text-sm uppercase tracking-widest text-mycolor-500 mb-1">
+        Association Origami
+      </h3>
+
+      <!-- Email -->
+      <a href="mailto:info@asso-origami.fr"
+         class="text-sm hover:underline hover:text-mycolor-600 transition-colors flex items-center gap-2">
+        <!-- icône enveloppe SVG inline -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+             aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" fill="none"/>
+          <polyline points="2,4 12,13 22,4" stroke="currentColor" fill="none"/>
+        </svg>
+        info@asso-origami.fr
+      </a>
+
+      <!-- Téléphone -->
+      <a href="tel:+33xxxxxxx"
+         class="text-sm hover:underline hover:text-mycolor-600 transition-colors flex items-center gap-2">
+        <!-- icône téléphone SVG inline -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+             aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 5.5A2.5 2.5 0 0 1 5.5 3h.38a1 1 0 0 1 .95.68l1.1 3.3a1 1 0 0 1-.23 1.02L6.2 9.4a11.05 11.05 0 0 0 4.4 4.4l1.4-1.5a1 1 0 0 1 1.02-.23l3.3 1.1a1 1 0 0 1 .68.95v.38A2.5 2.5 0 0 1 14.5 17C8.15 17 3 11.85 3 5.5z"/>
+        </svg>
+        xx xx xx xx
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/groups/1789550838040836/user/61585941104941"
+         target="_blank" rel="noopener noreferrer"
+         class="text-sm hover:underline hover:text-mycolor-600 transition-colors flex items-center gap-2">
+        <!-- icône Facebook SVG inline -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="currentColor"
+             viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.12 8.44 9.88v-6.99H7.9v-2.89h2.54V9.84c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99C18.34 21.12 22 16.99 22 12z"/>
+        </svg>
+        Rejoindre sur Facebook
+      </a>
+
+      <!-- Caylus & Saint-Antonin -->
+      <p class="text-xs text-mycolor-600 mt-1 flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+        Caylus &amp; Saint-Antonin-Noble-Val
+      </p>
+    </div>
+
+    <!-- Colonne droite : Crédits -->
+    <div class="flex flex-col gap-3">
+      <h3 class="font-semibold text-sm uppercase tracking-widest text-mycolor-500 mb-1">
+        Crédits
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Conception &amp; Réalisation Logos<br>
+        <span class="font-medium">Arnaud ROI</span>
+        <a href="mailto:info@asso-origami.fr"
+         class="text-sm hover:underline hover:text-mycolor-600 transition-colors flex items-center gap-2">
+        <!-- icône enveloppe SVG inline -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"
+             aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" fill="none"/>
+          <polyline points="2,4 12,13 22,4" stroke="currentColor" fill="none"/>
+        </svg>
+        info@asso-origami.fr
+      </a>
+      </p>
+      
+      <p class="text-xs text-mycolor-600 mt-auto pt-4">
+        Site réalisé collaborativement — 2026
+      </p>
+    </div>
+
+  </div>
+</footer>

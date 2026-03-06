@@ -3,5 +3,8 @@
     "@tailwindcss/cli": "^4.2.1",
     "@tailwindcss/typography": "^0.5.19",
     "tailwindcss": "^4.2.1"
+  },
+  "dependencies": {
+    "aos": "^2.3.4"
   }
 }
