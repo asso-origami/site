@@ -22,3 +22,6 @@ description = ''
   </div>
 
 </section>
+{{< text/spaceLine >}}
+{{< cafe_bricole >}}
+{{< text/spaceLine >}}
