@@ -39,6 +39,16 @@ title = "Un micro-ondes en panne ? On le répare !"
     alt = "Four micro-ondes en panne à réparer plutôt que remplacer"
     group = "bricole"
     featured = true
+
+[[resources]]
+src = "projet-creation-entraide-bricolage.jpg"
+name = "fablab"
+title = "Création solidaire"
+[resources.params]
+    alt = "Dessin d'un atelier de création solidaire dans un fablab"
+    group = ""
+    featured = true
+
 +++
 
 <section class="flex flex-col md:flex-row items-center gap-8 py-10 px-6 max-w-5xl mx-auto">
@@ -60,6 +70,7 @@ title = "Un micro-ondes en panne ? On le répare !"
 {{< text/spaceLine >}}
 {{< cafe_bricole >}}
 {{< text/spaceLine >}}
+{{< text/space >}}
 {{< images/gallery group="bricole" cols_sm="3" cols_md="3" cols_lg="3" gap="1">}}
 
 {{< text/text_center_light aos="zoom-in">}}
@@ -72,12 +83,13 @@ N'hésitez surtout pas en vous rappelant que ce service associatif est totalemen
 <b>Atelier gratuit, adultes et enfants accompagnés</b>
 {{< /text/text_center_light >}}
 
-{{< text/spaceLine >}}
 
-{{< text/text_center_dark aos="fade-right">}}
+{{< text/spaceLine >}}
+{{< text/space >}}
+{{< text/bg_img_R_textSize_light name="fablab" >}}
 L'association Origami est née d'une conviction simple : les projets les plus beaux naissent souvent de la rencontre entre des esprits curieux et des mains volontaires.<br>
 Qu'il s'agisse de réparer une bicyclette, de fabriquer un composteur en bois de récupération, d'automatiser un potager avec un Raspberry Pi ou de développer un outil numérique au service d'une cause solidaire, Origami offre un espace où chacune et chacun peut venir chercher — et apporter — de l'aide.<br>
 Ici, le savoir-faire se partage sans hiérarchie : le bricoleur aguerri et la débutante curieuse, le développeur expérimenté et l'amateur passionné avancent ensemble, projet par projet. L'idée n'est pas de tout faire à la place de l'autre, mais de créer les conditions d'une collaboration réelle, où l'entraide devient le moteur de la réalisation.
-
-{{< /text/text_center_dark >}}
+{{< /text/bg_img_R_textSize_light >}}
+{{< text/space >}}
 {{< text/spaceLine >}}
