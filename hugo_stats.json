@@ -3,6 +3,7 @@
     "tags": [
       "body",
       "div",
+      "figure",
       "h1",
       "head",
       "header",
@@ -12,8 +13,10 @@
       "main",
       "meta",
       "p",
+      "picture",
       "script",
       "section",
+      "source",
       "title"
     ],
     "classes": [

@@ -4,6 +4,14 @@ draft = false
 title = ''
 h1 = "Origami"
 description = ''
+
+[[resources]]
+src = "atelier-reparation-gratuit-cafe-bricol-caylus.jpg"
+name = "cafe"
+title = "Les Cafés Bricole"
+[resources.params]
+    alt = "Affiche du Café Bricol' d'Origami à Caylus : atelier gratuit de réparation d'objets domestiques, le 1er jeudi de chaque mois à 18h à La Fabrique, ZA Chirou."
+    featured = true
 +++
 
 <section class="flex flex-col md:flex-row items-center gap-8 py-10 px-6 max-w-5xl mx-auto">
@@ -25,3 +33,4 @@ description = ''
 {{< text/spaceLine >}}
 {{< cafe_bricole >}}
 {{< text/spaceLine >}}
+{{< images/figure name="cafe" >}}
