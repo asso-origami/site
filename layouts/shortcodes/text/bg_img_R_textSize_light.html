@@ -1,0 +1,30 @@
+<div class="block md:grid md:grid-cols-2 xl:grid-cols-5 2xl:grid-cols-6">
+
+  <!-- Colonne texte -->
+  <div class="bg-img-text-panel-light p-4 md:pb-6 xl:p-8 2xl:p-12
+              bg-gradient-to-r from-mycolor-300 via-mycolor-200 to-mycolor-300
+              text-myblack
+              md:col-span-1 xl:col-span-2"
+       data-aos="zoom-in">
+    {{ .Inner | markdownify }}
+  </div>
+
+  <!-- Colonne image -->
+  <div class="relative overflow-hidden
+              w-full
+              h-64 sm:h-80 md:h-auto
+              md:col-span-1 xl:col-span-3 2xl:col-span-4"
+       data-aos="fade-left">
+
+    {{ $imgIdentifier := or (.Get "name") (.Get "img") (.Get "src") }}
+
+    {{ partial "images/img_logic.html" (dict
+        "context" .
+        "name" $imgIdentifier
+        "alt" (.Get "alt")
+        "class" "absolute inset-0 w-full h-full object-cover object-center"
+    ) }}
+
+  </div>
+
+</div>

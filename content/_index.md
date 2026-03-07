@@ -69,6 +69,7 @@ title = "Création solidaire"
 </section>
 {{< text/spaceLine >}}
 {{< cafe_bricole >}}
+
 {{< text/spaceLine >}}
 {{< text/space >}}
 {{< images/gallery group="bricole" cols_sm="3" cols_md="3" cols_lg="3" gap="1">}}
