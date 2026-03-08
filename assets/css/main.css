@@ -1,5 +1,6 @@
 @import "../../node_modules/aos/dist/aos.css";
 @import "tailwindcss";
+@import "./animation.css";
 @plugin "@tailwindcss/typography";
 @source "hugo_stats.json";
 
@@ -36,7 +37,7 @@
 }
 
 @theme {
-  --color-mycolor-0:   #E6EAE6;
+  --color-mycolor-0:   #f0f6f0;
   --color-mycolor-50:  #D8DED8;
   --color-mycolor-100: #CAD2CA;
   --color-mycolor-200: #BDC6BD;
@@ -63,7 +64,7 @@
 @layer base {
   /* le body */
   body {
-    @apply max-w-7xl mx-auto bg-gray-50 text-gray-700 px-1 md:px-2 font-sans leading-relaxed tracking-wide;
+    @apply max-w-7xl mx-auto bg-mycolor-0 text-myblack px-1 md:px-2 font-sans leading-relaxed tracking-wide;
   }
 
   /* les titres */

@@ -50,24 +50,12 @@ title = "Création solidaire"
     featured = true
 
 +++
-
-<section class="flex flex-col md:flex-row items-center gap-8 py-10 px-6 max-w-5xl mx-auto">
-
-  <div class="w-full md:w-2/5 flex justify-center">
-    <img src="images/logos/Logo.svg" alt="Logo Association Origami" class="w-full max-w-xs h-auto">
-  </div>
-
-  <div class="w-full md:w-3/5 text-center md:text-left">
-    <h1 class="text-4xl font-bold tracking-tight text-gray-900">
-      Association Origami
-    </h1>
-    <p class="mt-4 text-lg text-gray-600 leading-relaxed">
-      Explorez l'art du making et de la fabrication numérique — un espace de création, de partage et d'innovation ouvert à tous.
-    </p>
-  </div>
-
-</section>
+<!-- hero logo avec animation d'outils -->
+{{< graphisme/hero_bg >}}
 {{< text/spaceLine >}}
+
+{{< text/spaceLine>}}
+<!-- calendrier du café bricole -->
 {{< cafe_bricole >}}
 
 {{< text/spaceLine >}}

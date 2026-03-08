@@ -1,0 +1,191 @@
+{{/*
+  Partial : cafe_bricole_poster.html
+  Emplacement : layouts/partials/cafe_bricole_poster.html
+  Appelé via : layouts/shortcodes/cafe_bricole.html → {{ partial "cafe_bricole_poster.html" . }}
+  Dépendances : Tailwind CSS (zéro <style> embarqué)
+*/}}
+
+{{- $data     := site.Data.cafes_bricole -}}
+{{- $defLieu  := $data.default_lieu    | default "La Fabrique à Caylus" -}}
+{{- $defHeure := $data.default_horaire | default "18h – 21h" -}}
+
+{{- $evts := slice -}}
+{{- range $data.evenements -}}
+  {{- $lieu  := cond (ne .lieu "")    .lieu    $defLieu  -}}
+  {{- $heure := cond (ne .horaire "") .horaire $defHeure -}}
+  {{- $evts = $evts | append (dict "date" .date "lieu" $lieu "horaire" $heure) -}}
+{{- end -}}
+
+<section id="cafe-bricole-section" aria-label="Prochain Café Bricole" class="max-w-3xl mx-auto px-4 py-10">
+
+  <script id="cb-data" type="application/json">{{ $evts | jsonify | safeJS }}</script>
+
+  <div id="cb-poster-root"></div>
+
+  <script>
+  (function () {
+
+    const ILLUS = [
+      /* 1 – Bricoleur enthousiaste */
+      `<svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="32" r="18" fill="#FDDCB0" stroke="#1A1008" stroke-width="2.5"/><circle cx="54" cy="29" r="3" fill="#1A1008"/><circle cx="66" cy="29" r="3" fill="#1A1008"/><circle cx="55" cy="28" r="1" fill="#fff"/><circle cx="67" cy="28" r="1" fill="#fff"/><path d="M53 37 Q60 44 67 37" stroke="#1A1008" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M42 26 Q60 10 78 26" fill="#E8530A" stroke="#1A1008" stroke-width="2"/><rect x="38" y="24" width="44" height="5" rx="2.5" fill="#C4390A" stroke="#1A1008" stroke-width="2"/><line x1="44" y1="58" x2="22" y2="35" stroke="#FDDCB0" stroke-width="10" stroke-linecap="round"/><line x1="44" y1="58" x2="22" y2="35" stroke="#1A1008" stroke-width="2.5" stroke-linecap="round"/><rect x="8" y="12" width="20" height="7" rx="3" fill="#F5C842" stroke="#1A1008" stroke-width="2"/><rect x="26" y="14" width="14" height="3" rx="1.5" fill="#888" stroke="#1A1008" stroke-width="1.5"/><line x1="76" y1="58" x2="92" y2="72" stroke="#FDDCB0" stroke-width="10" stroke-linecap="round"/><line x1="76" y1="58" x2="92" y2="72" stroke="#1A1008" stroke-width="2.5" stroke-linecap="round"/><rect x="48" y="84" width="10" height="28" rx="5" fill="#1A1008"/><rect x="62" y="84" width="10" height="28" rx="5" fill="#1A1008"/><text x="95" y="30" font-size="14">✨</text><text x="5" y="48" font-size="12">⚡</text></svg>`,
+      /* 2 – Robot détraqué */
+      `<svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="10" width="60" height="48" rx="8" fill="#B0C8E8" stroke="#1A1008" stroke-width="2.5"/><line x1="60" y1="10" x2="60" y2="2" stroke="#1A1008" stroke-width="3"/><circle cx="60" cy="2" r="4" fill="#E8530A" stroke="#1A1008" stroke-width="2"/><rect x="38" y="24" width="16" height="12" rx="3" fill="#F5C842" stroke="#1A1008" stroke-width="2"/><rect x="66" y="24" width="16" height="12" rx="3" fill="#3A7D44" stroke="#1A1008" stroke-width="2"/><circle cx="46" cy="30" r="4" fill="#E8530A"/><circle cx="74" cy="30" r="4" fill="#E8530A"/><rect x="38" y="44" width="6" height="6" fill="#1A1008"/><rect x="50" y="44" width="6" height="6" fill="#1A1008"/><rect x="62" y="44" width="6" height="6" fill="#1A1008"/><rect x="74" y="44" width="6" height="6" fill="#1A1008"/><rect x="36" y="60" width="48" height="38" rx="4" fill="#7A9EC0" stroke="#1A1008" stroke-width="2.5"/><circle cx="60" cy="79" r="8" fill="#E8530A" stroke="#1A1008" stroke-width="2"/><text x="56" y="83" font-size="10" fill="#fff" font-weight="bold">ON</text><rect x="12" y="62" width="22" height="8" rx="4" fill="#7A9EC0" stroke="#1A1008" stroke-width="2"/><path d="M12 58 a8 8 0 0 1 0 16" fill="#F5C842" stroke="#1A1008" stroke-width="2"/><rect x="86" y="62" width="22" height="8" rx="4" fill="#7A9EC0" stroke="#1A1008" stroke-width="2"/><rect x="102" y="52" width="14" height="10" rx="2" fill="#888" stroke="#1A1008" stroke-width="2"/><rect x="40" y="98" width="14" height="18" rx="4" fill="#4A6E8A" stroke="#1A1008" stroke-width="2"/><rect x="66" y="98" width="14" height="18" rx="4" fill="#4A6E8A" stroke="#1A1008" stroke-width="2"/><text x="5" y="18" font-size="11">⚙️</text></svg>`,
+      /* 3 – Pie à lunettes avec perceuse */
+      `<svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="60" cy="72" rx="28" ry="34" fill="#2A2A2A" stroke="#1A1008" stroke-width="2.5"/><ellipse cx="60" cy="78" rx="16" ry="22" fill="#fff"/><circle cx="60" cy="36" r="22" fill="#2A2A2A" stroke="#1A1008" stroke-width="2.5"/><ellipse cx="66" cy="38" rx="10" ry="8" fill="#fff"/><path d="M72 40 L86 35 L82 42 Z" fill="#F5C842" stroke="#1A1008" stroke-width="2"/><circle cx="52" cy="32" r="9" fill="none" stroke="#E8530A" stroke-width="3"/><circle cx="70" cy="32" r="9" fill="none" stroke="#E8530A" stroke-width="3"/><line x1="43" y1="32" x2="38" y2="30" stroke="#E8530A" stroke-width="3"/><line x1="79" y1="32" x2="84" y2="30" stroke="#E8530A" stroke-width="3"/><path d="M32 70 Q10 60 8 75 Q10 85 30 80" fill="#2A2A2A" stroke="#1A1008" stroke-width="2"/><rect x="-2" y="68" width="22" height="10" rx="4" fill="#888" stroke="#1A1008" stroke-width="2"/><path d="M20 70 L0 67 L0 81 Z" fill="#C0C0C0" stroke="#1A1008" stroke-width="1.5"/><path d="M88 65 Q110 55 112 68 Q108 78 90 75" fill="#2A2A2A" stroke="#1A1008" stroke-width="2"/><line x1="52" y1="106" x2="48" y2="118" stroke="#F5C842" stroke-width="5" stroke-linecap="round"/><line x1="68" y1="106" x2="72" y2="118" stroke="#F5C842" stroke-width="5" stroke-linecap="round"/><text x="92" y="22" font-size="14" transform="rotate(-15,92,22)">🔩</text></svg>`,
+      /* 4 – Octopus chapelier */
+      `<svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M20 70 Q15 95 22 108 Q28 95 28 80" fill="#9B59B6" stroke="#1A1008" stroke-width="2"/><path d="M34 80 Q30 108 40 115 Q44 95 42 82" fill="#9B59B6" stroke="#1A1008" stroke-width="2"/><path d="M56 84 Q58 112 62 116 Q66 108 62 84" fill="#9B59B6" stroke="#1A1008" stroke-width="2"/><path d="M76 82 Q82 110 78 116 Q74 100 72 82" fill="#9B59B6" stroke="#1A1008" stroke-width="2"/><path d="M90 76 Q100 100 96 112 Q90 98 86 78" fill="#9B59B6" stroke="#1A1008" stroke-width="2"/><path d="M14 50 Q-2 38 2 26 Q8 30 12 40" fill="#F5C842" stroke="#1A1008" stroke-width="2"/><rect x="-2" y="18" width="16" height="8" rx="4" fill="#F5C842" stroke="#1A1008" stroke-width="2"/><path d="M106 50 Q118 38 114 26 Q108 30 104 40" fill="#C8A060" stroke="#1A1008" stroke-width="2"/><rect x="106" y="16" width="16" height="10" rx="2" fill="#888" stroke="#1A1008" stroke-width="2"/><ellipse cx="60" cy="56" rx="36" ry="40" fill="#BB6FD4" stroke="#1A1008" stroke-width="2.5"/><circle cx="48" cy="44" r="10" fill="#fff" stroke="#1A1008" stroke-width="2"/><circle cx="72" cy="44" r="10" fill="#fff" stroke="#1A1008" stroke-width="2"/><circle cx="50" cy="45" r="5" fill="#1A1008"/><circle cx="74" cy="45" r="5" fill="#1A1008"/><path d="M48 60 Q60 68 72 60" stroke="#1A1008" stroke-width="2.5" fill="none" stroke-linecap="round"/><rect x="42" y="6" width="36" height="22" rx="3" fill="#1A1008"/><rect x="34" y="26" width="52" height="6" rx="3" fill="#1A1008"/><rect x="46" y="8" width="28" height="4" rx="2" fill="#E8530A"/></svg>`,
+      /* 5 – Chat paresseux */
+      `<svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="88" width="100" height="10" rx="4" fill="#C8A060" stroke="#1A1008" stroke-width="2"/><ellipse cx="55" cy="76" rx="30" ry="22" fill="#F0A040" stroke="#1A1008" stroke-width="2.5"/><path d="M28 88 Q18 98 14 108" stroke="#F0A040" stroke-width="12" stroke-linecap="round"/><path d="M82 90 Q92 98 96 108" stroke="#F0A040" stroke-width="12" stroke-linecap="round"/><path d="M85 76 Q108 60 104 45 Q100 38 95 44" stroke="#F0A040" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="55" cy="48" r="26" fill="#F0A040" stroke="#1A1008" stroke-width="2.5"/><path d="M34 30 L28 12 L46 24" fill="#F0A040" stroke="#1A1008" stroke-width="2"/><path d="M76 30 L82 12 L64 24" fill="#F0A040" stroke="#1A1008" stroke-width="2"/><ellipse cx="44" cy="46" rx="8" ry="5" fill="#fff" stroke="#1A1008" stroke-width="2"/><ellipse cx="66" cy="46" rx="8" ry="5" fill="#fff" stroke="#1A1008" stroke-width="2"/><path d="M36 44 Q44 40 52 44" fill="#F0A040" stroke="#1A1008" stroke-width="1.5"/><path d="M58 44 Q66 40 74 44" fill="#F0A040" stroke="#1A1008" stroke-width="1.5"/><circle cx="44" cy="48" r="4" fill="#3A2000"/><circle cx="66" cy="48" r="4" fill="#3A2000"/><line x1="30" y1="54" x2="46" y2="56" stroke="#1A1008" stroke-width="1.5"/><line x1="64" y1="56" x2="80" y2="54" stroke="#1A1008" stroke-width="1.5"/><ellipse cx="55" cy="54" rx="4" ry="3" fill="#E87070"/><path d="M48 60 Q55 66 62 60" stroke="#1A1008" stroke-width="2" fill="#FDBDBD"/><rect x="82" y="74" width="28" height="8" rx="4" fill="#888" stroke="#1A1008" stroke-width="2" transform="rotate(-20,82,74)"/><ellipse cx="106" cy="13" rx="12" ry="9" fill="#fff" stroke="#aaa" stroke-width="1.5" opacity=".9"/><text x="98" y="17" font-size="9" text-anchor="middle">café ☕</text></svg>`
+    ];
+
+    const JOURS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+    const MOIS  = ['janvier','février','mars','avril','mai','juin',
+                   'juillet','août','septembre','octobre','novembre','décembre'];
+
+    function formatDate(iso) {
+      const [y, m, d] = iso.split('-').map(Number);
+      const dt = new Date(y, m - 1, d);
+      return `${JOURS[dt.getDay()]} ${d} ${MOIS[m - 1]} ${y}`;
+    }
+
+    function illusDuJour(total) {
+      const t = new Date();
+      return (t.getFullYear() * 10000 + (t.getMonth() + 1) * 100 + t.getDate()) % total;
+    }
+
+    const raw    = JSON.parse(document.getElementById('cb-data').textContent);
+    const today  = new Date(); today.setHours(0, 0, 0, 0);
+    const avenir = raw
+      .filter(e => { const [y,m,d] = e.date.split('-').map(Number); return new Date(y,m-1,d) >= today; })
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const root = document.getElementById('cb-poster-root');
+
+    if (avenir.length === 0) {
+      root.innerHTML = `
+        <div class="text-center py-10 px-6 bg-amber-50 border-2 border-dashed border-amber-300 rounded-2xl text-amber-700 italic">
+          🔧 Aucun Café Bricole programmé prochainement — revenez vite !
+        </div>`;
+      return;
+    }
+
+    const prochain = avenir[0];
+    const suivants = avenir.slice(1, 3);
+    let   current  = illusDuJour(ILLUS.length);
+
+    /* ── Affiche ── */
+    root.innerHTML = `
+
+      <!-- Affiche principale -->
+      <div class="relative rounded-2xl border-4 border-stone-900 shadow-[6px_6px_0_#c2410c] overflow-hidden bg-amber-50">
+
+        <!-- Bandeau titre -->
+        <div class="bg-orange-600 text-white text-center px-4 py-3 border-b-4 border-stone-900
+                    text-2xl font-extrabold tracking-wide"
+             style="font-family:'Baloo 2',system-ui,sans-serif;text-shadow:2px 2px 0 #9a3412">
+          ☕ Café Bricole
+          <span class="bg-amber-400 text-stone-900 px-2 py-0.5 rounded-md ml-2 text-lg align-middle">
+            #participatif
+          </span>
+        </div>
+
+        <!-- Corps -->
+        <div class="grid sm:grid-cols-[1fr_auto]">
+
+          <!-- Infos -->
+          <div class="flex flex-col justify-center gap-5 px-6 py-6">
+
+            <div class="flex items-start gap-3">
+              <span class="text-2xl leading-none mt-0.5">📅</span>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-widest text-orange-600 mb-0.5">Quand</p>
+                <p id="cb-date"
+                   class="font-extrabold text-orange-600 text-xl leading-snug"
+                   style="font-family:'Baloo 2',system-ui,sans-serif;text-shadow:1px 1px 0 #9a3412"></p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="text-2xl leading-none mt-0.5">🕕</span>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-widest text-orange-600 mb-0.5">Horaire</p>
+                <p id="cb-horaire" class="font-bold text-stone-800 text-lg"></p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <span class="text-2xl leading-none mt-0.5">📍</span>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-widest text-orange-600 mb-0.5">Lieu</p>
+                <p id="cb-lieu" class="font-bold text-stone-800 text-lg"></p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Illustration -->
+          <div id="cb-illus"
+               class="flex items-center justify-center bg-amber-400
+                      border-t-4 sm:border-t-0 sm:border-l-4 border-stone-900
+                      p-6 min-w-[160px]">
+          </div>
+
+        </div>
+
+        <!-- Coins déco -->
+        <span aria-hidden="true"
+              class="absolute top-2 left-2 text-5xl opacity-[0.06] -rotate-12 pointer-events-none select-none">⚙</span>
+        <span aria-hidden="true"
+              class="absolute bottom-2 right-2 text-5xl opacity-[0.06] rotate-12 pointer-events-none select-none">⚙</span>
+      </div>
+
+      <!-- Prochains événements -->
+      <div id="cb-next" class="mt-6"></div>
+    `;
+
+    /* Remplir les données */
+    document.getElementById('cb-date').textContent    = formatDate(prochain.date);
+    document.getElementById('cb-horaire').textContent = prochain.horaire;
+    document.getElementById('cb-lieu').textContent    = prochain.lieu;
+    document.getElementById('cb-illus').innerHTML     = ILLUS[current];
+
+    /* Prochains */
+    if (suivants.length > 0) {
+      const icons = ['🔨','🪛','🔩'];
+      document.getElementById('cb-next').innerHTML = `
+        <p class="text-sm font-extrabold uppercase tracking-widest text-green-800 mb-3"
+           style="font-family:'Baloo 2',system-ui,sans-serif">
+          📆 Les prochains Cafés Bricole
+        </p>
+        <div class="flex flex-wrap gap-3">
+          ${suivants.map((e, i) => `
+            <div class="flex-1 basis-48 bg-white border-2 border-stone-900 rounded-xl
+                        shadow-[3px_3px_0_#15803d] px-4 py-3 flex items-center gap-3">
+              <span class="text-2xl">${icons[i]}</span>
+              <div>
+                <p class="font-extrabold text-green-700 text-base leading-tight"
+                   style="font-family:'Baloo 2',system-ui,sans-serif">${formatDate(e.date)}</p>
+                <p class="text-xs text-stone-500 mt-0.5">⏰ ${e.horaire} &nbsp;·&nbsp; 📍 ${e.lieu}</p>
+              </div>
+            </div>`).join('')}
+        </div>
+      `;
+    }
+
+    /* Rotation illustration toutes les 8 s – option B (style inline) */
+    setInterval(() => {
+      const el = document.getElementById('cb-illus');
+      if (!el) return;
+      el.style.transition = 'opacity 0.4s ease';
+      el.style.opacity    = '0';
+      setTimeout(() => {
+        current      = (current + 1) % ILLUS.length;
+        el.innerHTML = ILLUS[current];
+        el.style.opacity = '1';
+      }, 400);
+    }, 8000);
+
+  })();
+  </script>
+
+</section>

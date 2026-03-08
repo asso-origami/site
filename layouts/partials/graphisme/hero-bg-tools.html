@@ -1,0 +1,16 @@
+{{/* partial: hero-bg-tools.html
+   Usage dans un layout :
+   {{ partial "hero-bg-tools.html" . }}
+*/}}
+
+<div class="hero-tools-wrapper">
+
+  <!-- Conteneur des SVG animés -->
+  {{ partial "graphisme/tools-bg.html" . }}
+  <!-- /.tools-bg -->
+
+  {{/* Ici tu mets le contenu de ton hero */}}
+  {{ partial "graphisme/hero.html" . }}
+  </div>
+
+</div><!-- /.hero-tools-wrapper -->
