@@ -102,16 +102,16 @@
 .tool-1 {
   top: 8%;
   left: 12%;
-  width: 90px;
-  height: 90px;
+  width: clamp(35px, 8vw, 110px);
+  height: clamp(35px, 8vw, 110px);
   animation: tool-move-1 18s ease-in-out infinite;
 }
 
 .tool-2 {
   top: 20%;
   left: 72%;
-  width: 80px;
-  height: 80px;
+  width: clamp(35px, 7vw, 110px);
+  height: clamp(35px, 7vw, 110px);
   animation: tool-move-2 22s ease-in-out infinite;
   animation-delay: -6s;
 }
@@ -119,8 +119,8 @@
 .tool-3 {
   top: 55%;
   left: 15%;
-  width: 70px;
-  height: 70px;
+  width: clamp(305px, 6vw, 110px);
+  height: clamp(35px, 6vw, 110px);
   animation: tool-move-3 20s ease-in-out infinite;
   animation-delay: -12s;
 }
@@ -128,8 +128,8 @@
 .tool-4 {
   top: 60%;
   left: 85%;
-  width: 100px;
-  height: 100px;
+  width: clamp(35px, 9vw, 110px);
+  height: clamp(35px, 9vw, 110px);
   animation: tool-move-4 25s ease-in-out infinite;
   animation-delay: -4s;
 }
@@ -137,8 +137,8 @@
 .tool-5 {
   top: 35%;
   left: 45%;
-  width: 75px;
-  height: 75px;
+  width: clamp(35px, 7vw, 110px);
+  height: clamp(35px, 7vw, 110px);
   animation: tool-move-5 16s ease-in-out infinite;
   animation-delay: -9s;
 }

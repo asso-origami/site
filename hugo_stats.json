@@ -211,6 +211,9 @@
     "ids": [
       "Capa_1",
       "Layer_1",
+      "SVGRepo_bgCarrier",
+      "SVGRepo_iconCarrier",
+      "SVGRepo_tracerCarrier",
       "cafe-bricole-section",
       "cb-data",
       "cb-poster-root",
@@ -353,7 +356,10 @@
       "modal-gallery-bricole-1772993610-2",
       "modal-gallery-bricole-1772993630-0",
       "modal-gallery-bricole-1772993630-1",
-      "modal-gallery-bricole-1772993630-2"
+      "modal-gallery-bricole-1772993630-2",
+      "modal-gallery-bricole-1772998022-0",
+      "modal-gallery-bricole-1772998022-1",
+      "modal-gallery-bricole-1772998022-2"
     ]
   }
 }
