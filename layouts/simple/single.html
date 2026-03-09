@@ -1,0 +1,7 @@
+{{ define "main" }}
+  <main class="max-w-2xl mx-auto px-4 py-12 prose br-red-400">
+    <h1>{{ .Params.h1 | default .Title }}</h1>
+    on est dans simple.html
+    {{ .Content }}
+  </main>
+{{ end }}

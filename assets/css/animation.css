@@ -127,7 +127,7 @@
 
 .tool-4 {
   top: 60%;
-  left: 85%;
+  left: clamp(60%, 75vw, 85%); /* recule sur petits écrans */
   width: clamp(35px, 9vw, 110px);
   height: clamp(35px, 9vw, 110px);
   animation: tool-move-4 25s ease-in-out infinite;
@@ -160,6 +160,16 @@
   .tool-3 { width: 45px; height: 45px; }
   .tool-4 { width: 60px; height: 60px; }
   .tool-5 { width: 48px; height: 48px; }
+
+    @keyframes tool-move-4 {
+    0%   { transform: translate(0,    0)    rotate(10deg)  scale(0.8);  opacity: 0;   }
+    15%  { opacity: 0.9; }
+    35%  { transform: translate(-30px, -40px) rotate(80deg)  scale(0.56); opacity: 1;   }
+    60%  { transform: translate(0px,  -20px) rotate(170deg) scale(0.96); opacity: 0.9; }
+    80%  { transform: translate(-5px,   40px) rotate(260deg) scale(0.72); opacity: 1;   }
+    90%  { opacity: 0.75; }
+    100% { transform: translate(0,    0)    rotate(370deg) scale(0.8);  opacity: 0;   }
+  }
 }
 
 /* ============================================================

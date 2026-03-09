@@ -9,9 +9,10 @@
   {{ $t3 := resources.Get "icons/hammer-and-wrench-svgrepo-com.svg" }}
   <div class="tool tool-3">{{ $t3.Content | safeHTML }}</div>
 
-  {{ $t4 := resources.Get "icons/3d-printer-svgrepo-com.svg" }}
-  <div class="tool tool-4">{{ $t4.Content | safeHTML }}</div>
-
+  {{ $t4 := resources.Get "icons/scientist_200.webp" }}
+  <div class="tool tool-4">
+    <img src="{{ $t4.RelPermalink }}" alt="Savant" width="200" height="200">
+  </div>
   {{ $t5 := resources.Get "icons/drill-svgrepo-com.svg" }}
   <div class="tool tool-5">{{ $t5.Content | safeHTML }}</div>
 
