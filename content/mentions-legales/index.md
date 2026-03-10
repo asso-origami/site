@@ -4,12 +4,13 @@ draft = false
 title = 'Mentions Legales'
 h1 = 'Mentions Légales'
 description = "Mentions légales du site de l'association Origami"
+
 layout = "simple"
 +++
 
 ## Éditeur
 
-**Association Origai**  
+**Association Origami**  
 Association loi 1901  
 Siège social : [Adresse complète]  
 Email : [info@asso-origami.fr](mailto:info@asso-origami.fr)

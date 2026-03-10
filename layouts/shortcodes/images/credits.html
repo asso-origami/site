@@ -1,0 +1,65 @@
+{{/* layouts/shortcodes/credits.html */}}
+
+{{ $credits := sort (where site.Data.credits "active" true) "index" }}
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 my-8">
+
+  {{ range $credits }}
+  <div class="flex flex-col items-center text-center gap-2 p-4 rounded-lg border border-gray-200 bg-white shadow-sm">
+
+    {{/* ── MINIATURE ── */}}
+    <div class="w-16 h-16 flex items-center justify-center">
+
+      {{ if eq .location "assets" }}
+        {{ $img := resources.Get .src }}
+        {{ if $img }}
+          {{ if or (strings.HasSuffix .src ".svg") (strings.HasSuffix .src ".SVG") }}
+            <img src="{{ $img.RelPermalink }}" alt="{{ .author }}" class="w-full h-full object-contain">
+          {{ else }}
+            {{ $thumb := $img.Resize "128x webp q80" }}
+            <img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ .author }}" class="w-full h-full object-contain">
+          {{ end }}
+        {{ else }}
+          <span class="text-xs text-red-500">Image introuvable</span>
+        {{ end }}
+
+      {{ else }}
+        {{/* static : URL directe */}}
+        <img src="{{ .src | relURL }}" alt="{{ .author }}" class="w-full h-full object-contain">
+      {{ end }}
+
+    </div>
+
+    {{/* ── AUTEUR ── */}}
+    {{ if .author }}
+      <p class="font-semibold text-sm text-gray-800">
+        {{ if .author_url }}
+          <a href="{{ .author_url }}" target="_blank" rel="noopener noreferrer"
+             class="hover:underline text-blue-700">{{ .author }}</a>
+        {{ else }}
+          {{ .author }}
+        {{ end }}
+      </p>
+    {{ end }}
+
+    {{/* ── LICENCE + VIA ── */}}
+    {{ if or .license .via }}
+      <p class="text-xs text-gray-500 leading-relaxed">
+        {{ if .license }}{{ .license }}{{ end }}
+        {{ if and .license .via }} · {{ end }}
+        {{ if .via }}
+          via
+          {{ if .via_url }}
+            <a href="{{ .via_url }}" target="_blank" rel="noopener noreferrer"
+               class="hover:underline text-blue-600">{{ .via }}</a>
+          {{ else }}
+            {{ .via }}
+          {{ end }}
+        {{ end }}
+      </p>
+    {{ end }}
+
+  </div>
+  {{ end }}
+
+</div>

@@ -1,0 +1,74 @@
+[
+  {
+    "index": 1,
+    "active": true,
+    "src": "images/logos/Logo.svg",
+    "location": "static",
+    "author": "Arnaud Roi",
+    "author_url": "mailto:info@asso-origami.fr",
+    "license": "",
+    "via": "",
+    "via_url": "",
+    "caption": ""
+  },
+  {
+    "index": 2,
+    "active": true,
+    "src": "icons/hammer-and-wrench-svgrepo-com.svg",
+    "location": "assets",
+    "author": "Joypixels",
+    "author_url": "https://github.com/joypixels/emojione?ref=svgrepo.com",
+    "license": "MIT License",
+    "via": "SVG Repo",
+    "via_url": "https://www.svgrepo.com/",
+    "caption": ""
+  },
+    {
+    "index": 3,
+    "active": true,
+    "src": "icons/power-drill-tools-svgrepo-com.svg",
+    "location": "assets",
+    "author": "Muh_zakaria",
+    "author_url": "https://www.instagram.com/jakalaruku?ref=svgrepo.com",
+    "license": "CC Attribution License",
+    "via": "SVG Repo",
+    "via_url": "https://www.svgrepo.com/",
+    "caption": ""
+  },
+  {
+    "index": 4,
+    "active": true,
+    "src": "icons/screwdriver-svgrepo-com.svg",
+    "location": "assets",
+    "author": "",
+    "author_url": "",
+    "license": "CC0 License",
+    "via": "SVG Repo",
+    "via_url": "https://www.svgrepo.com/",
+    "caption": ""
+  },
+  {
+    "index": 5,
+    "active": true,
+    "src": "icons/drill-svgrepo-com.svg",
+    "location": "assets",
+    "author": "",
+    "author_url": "",
+    "license": "CC0 License",
+    "via": "SVG Repo",
+    "via_url": "https://www.svgrepo.com/",
+    "caption": ""
+  },
+    {
+    "index": 6,
+    "active": true,
+    "src": "icons/coffee-tea-hot-beverage-drink-steaming-svgrepo-com.svg",
+    "location": "assets",
+    "author": "Mgraphstudio",
+    "author_url": "https://dribbble.com/mgraphstudio?ref=svgrepo.com",
+    "license": "CC Attribution License",
+    "via": "SVG Repo",
+    "via_url": "https://www.svgrepo.com/",
+    "caption": ""
+  }
+]
