@@ -14,10 +14,10 @@
         {{ $img := resources.Get .src }}
         {{ if $img }}
           {{ if or (strings.HasSuffix .src ".svg") (strings.HasSuffix .src ".SVG") }}
-            <img src="{{ $img.RelPermalink }}" alt="{{ .author }}" class="w-full h-full object-contain">
+            <img src="{{ $img.RelPermalink }}" alt="{{ .alt }}" class="w-full h-full object-contain">
           {{ else }}
             {{ $thumb := $img.Resize "128x webp q80" }}
-            <img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ .author }}" class="w-full h-full object-contain">
+            <img src="{{ $thumb.RelPermalink }}" width="{{ $thumb.Width }}" height="{{ $thumb.Height }}" alt="{{ .alt }}" class="w-full h-full object-contain">
           {{ end }}
         {{ else }}
           <span class="text-xs text-red-500">Image introuvable</span>
@@ -25,7 +25,7 @@
 
       {{ else }}
         {{/* static : URL directe */}}
-        <img src="{{ .src | relURL }}" alt="{{ .author }}" class="w-full h-full object-contain">
+        <img src="{{ .src | relURL }}" alt="{{ .alt }}" class="w-full h-full object-contain">
       {{ end }}
 
     </div>
