@@ -6,5 +6,9 @@
   },
   "dependencies": {
     "aos": "^2.3.4"
+  },
+  // ajout pour build de cloudflare
+  "engines": {
+    "node": ">=18"
   }
 }

@@ -72,7 +72,6 @@ N'hésitez surtout pas en vous rappelant que ce service associatif est totalemen
 <b>Atelier gratuit, adultes et enfants accompagnés</b>
 {{< /text/text_center_light >}}
 
-
 {{< text/spaceLine >}}
 {{< text/space >}}
 {{< text/bg_img_R_textSize_light name="fablab" >}}
