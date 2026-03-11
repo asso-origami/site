@@ -25,25 +25,21 @@ layout = 'nu'
   </div>
 
   <div class="relative z-10 max-w-4xl mx-auto px-6 py-20 text-center">
-
     <!-- Accroche principale -->
     <p class="text-mycolor-300 uppercase tracking-[0.3em] text-sm font-medium mb-6"
        data-aos="fade-down" data-aos-duration="600">
       Atelier & entraide
     </p>
-
     <h1 class="text-4xl sm:text-5xl xl:text-6xl font-bold text-white leading-tight mb-8"
         data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
       Ton projet bloqué ?<br>
       <span class="text-mycolor-300">Tu n'es pas seul.</span>
     </h1>
-
     <p class="text-lg sm:text-xl text-mycolor-100/80 max-w-2xl mx-auto leading-relaxed mb-10"
        data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
       Électronique, programmation, Arduino, Raspberry Pi, machine à inventer, appareil à réparer…
       Quelle que soit l'étape où tu es coincé, on peut réfléchir ensemble et trouver une piste.
     </p>
-
     <a href="#contact-form"
        class="inline-block bg-mycolor-400 hover:bg-mycolor-300 text-myblack font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
        data-aos="zoom-in" data-aos-delay="350">
@@ -59,7 +55,6 @@ layout = 'nu'
 ═══════════════════════════════════════════════════ -->
 <section class="bg-white py-16 px-6">
   <div class="max-w-5xl mx-auto">
-
     <h2 class="text-2xl sm:text-3xl font-bold text-myblack text-center mb-4"
         data-aos="fade-up">
       Ce qu'on peut faire ensemble
@@ -68,9 +63,7 @@ layout = 'nu'
        data-aos="fade-up" data-aos-delay="100">
       Pas de jugement sur le niveau. L'idée, c'est d'avancer — à deux ou à plusieurs.
     </p>
-
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
       <!-- Carte 1 -->
       <div class="border border-mycolor-200 rounded-2xl p-6 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
            data-aos="fade-up" data-aos-delay="0">
@@ -81,7 +74,6 @@ layout = 'nu'
           On décortique ça ensemble.
         </p>
       </div>
-
       <!-- Carte 2 -->
       <div class="border border-mycolor-200 rounded-2xl p-6 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
            data-aos="fade-up" data-aos-delay="80">
@@ -92,7 +84,6 @@ layout = 'nu'
           on cherche pourquoi.
         </p>
       </div>
-
       <!-- Carte 3 -->
       <div class="border border-mycolor-200 rounded-2xl p-6 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
            data-aos="fade-up" data-aos-delay="160">
@@ -103,7 +94,6 @@ layout = 'nu'
           Et c'est toujours plus satisfaisant qu'un remplacement.
         </p>
       </div>
-
       <!-- Carte 4 -->
       <div class="border border-mycolor-200 rounded-2xl p-6 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
            data-aos="fade-up" data-aos-delay="0">
@@ -114,7 +104,6 @@ layout = 'nu'
           On transforme l'idée en plan d'action concret.
         </p>
       </div>
-
       <!-- Carte 5 -->
       <div class="border border-mycolor-200 rounded-2xl p-6 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
            data-aos="fade-up" data-aos-delay="80">
@@ -125,7 +114,6 @@ layout = 'nu'
           On configure et on dépanne.
         </p>
       </div>
-
       <!-- Carte 6 -->
       <div class="border border-mycolor-200 rounded-2xl p-6 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
            data-aos="fade-up" data-aos-delay="160">
@@ -136,7 +124,6 @@ layout = 'nu'
           C'est exactement le genre de projet qu'on aime accompagner.
         </p>
       </div>
-
     </div>
   </div>
 </section>
@@ -162,7 +149,6 @@ layout = 'nu'
 ═══════════════════════════════════════════════════ -->
 <section id="contact-form" class="bg-white py-16 px-6">
   <div class="max-w-2xl mx-auto">
-
     <h2 class="text-2xl sm:text-3xl font-bold text-myblack text-center mb-3"
         data-aos="fade-up">
       Raconte-moi ton projet
@@ -171,7 +157,6 @@ layout = 'nu'
        data-aos="fade-up" data-aos-delay="100">
       Pas besoin d'avoir tout ficelé. Un brouillon d'idée suffit pour commencer.
     </p>
-
     <!-- Formulaire — adapter à ton backend / Netlify Forms / Formspree -->
     <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
           action="/contact/merci"     
@@ -185,14 +170,12 @@ layout = 'nu'
                placeholder="Marie, Thomas…"
                class="w-full border border-mycolor-200 rounded-xl px-4 py-3 text-myblack placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mycolor-300 transition">
       </div>
-
       <div>
         <label class="block text-sm font-medium text-myblack mb-1" for="email">Ton e-mail</label>
         <input id="email" name="email" type="email" required
                placeholder="pour qu'on puisse te répondre"
                class="w-full border border-mycolor-200 rounded-xl px-4 py-3 text-myblack placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mycolor-300 transition">
       </div>
-
       <div>
         <label class="block text-sm font-medium text-myblack mb-1" for="type">Type de projet</label>
         <select id="type" name="type"
@@ -207,21 +190,18 @@ layout = 'nu'
           <option value="autre">Autre / je ne sais pas encore</option>
         </select>
       </div>
-
       <div>
         <label class="block text-sm font-medium text-myblack mb-1" for="message">Décris ton projet ou ton problème</label>
         <textarea id="message" name="message" rows="5" required
                   placeholder="Où tu en es, ce qui bloque, ce que tu veux faire… Pas besoin que ce soit parfait."
                   class="w-full border border-mycolor-200 rounded-xl px-4 py-3 text-myblack placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mycolor-300 transition resize-none"></textarea>
       </div>
-
       <div class="pt-2">
         <button type="submit"
                 class="w-full bg-mycolor-400 hover:bg-mycolor-300 text-myblack font-semibold py-4 rounded-full transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
           Envoyer mon message →
         </button>
       </div>
-
     </form>
 
   </div>
@@ -234,19 +214,16 @@ layout = 'nu'
 <section class="bg-mycolor-50 py-12 px-6"
          data-aos="fade-up">
   <div class="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-
     <div>
       <p class="text-3xl mb-3">🤝</p>
       <h3 class="font-bold text-myblack mb-1">Aucun jugement</h3>
       <p class="text-gray-500 text-sm">Peu importe ton niveau. On a tous débuté quelque part.</p>
     </div>
-
     <div>
       <p class="text-3xl mb-3">💬</p>
       <h3 class="font-bold text-myblack mb-1">Réponse humaine</h3>
       <p class="text-gray-500 text-sm">Pas de réponse automatique. On lit, on réfléchit, on répond vraiment.</p>
     </div>
-
     <div>
       <p class="text-3xl mb-3">🎯</p>
       <h3 class="font-bold text-myblack mb-1">Envie d'avancer</h3>
