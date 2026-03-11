@@ -20,3 +20,8 @@ lorem ipsum
 Un texte dans du shortcode pour voir si le bg groune marche ici  
 ## qu'en pensez-vous ???
 {{< /text/text_center_dark >}}
+
+{{< text/text_left_dark>}}
+Un texte qui doit être aligné à gauche ; avec un fond plutôt sombre et un texte en blanc
+## une idée ???
+{{< /text/text_left_dark>}}
