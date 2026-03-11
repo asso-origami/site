@@ -13,19 +13,8 @@
     {{ end }}
 
     {{ partial "footer.html" . }}
-    <!-- {{ partial "js.html" . }} -->
+    {{ partial "js.html" . }}
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    AOS.init({
-      // Vos options habituelles ici (durée, une seule fois, etc.)
-      duration: 800,
-      once: true
-    });
-  });
-</script>
 </body>
 </html>

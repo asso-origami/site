@@ -1,0 +1,8 @@
+{{ $aos := resources.Get "node_modules/aos/dist/aos.js" | minify | fingerprint }}
+<script src="{{ $aos.RelPermalink }}"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: false,
+  });
+</script>
