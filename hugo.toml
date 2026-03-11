@@ -38,3 +38,7 @@ title = 'Origami — Association FabLab en Quercy Rouergue | Projets makers & cr
 [params]
   description = "Origami, association FabLab & Repair Café en Quercy Rouergue. Partagez vos projets DIY, trouvez de l'entraide et créez ensemble en Occitanie."
   author = "Association Origami"
+
+[resources]
+  [resources._gen]
+    publishDiff = true

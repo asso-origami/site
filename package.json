@@ -9,5 +9,9 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "scripts": {
+    "prebuild": "mkdir -p assets/js && cp node_modules/aos/dist/aos.js assets/js/aos.js",
+    "build": "npm run prebuild && hugo --gc --minify"
   }
 }
