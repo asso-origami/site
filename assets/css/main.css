@@ -2,11 +2,11 @@
 @import "tailwindcss";
 @import "./animation.css";
 @plugin "@tailwindcss/typography";
-@source "hugo_stats.json";
+/* @source "hugo_stats.json"; */
 
 /* deux sources pour le css au niveau de cloudflare */
-@source "../../layouts";
-@source "../../content";
+@source "../../layouts/**/*.html";
+@source "../../content/**/*.md";
 
 /* ── Fontes auto-hébergées ── */
 @font-face {
