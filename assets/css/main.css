@@ -1,4 +1,4 @@
-@import "../../node_modules/aos/dist/aos.css";
+@import "./aos.css";
 @import "tailwindcss";
 @import "./animation.css";
 @plugin "@tailwindcss/typography";
@@ -88,5 +88,10 @@
   }
   h4 {
     @apply text-lg font-medium italic py-1.5;
+  }
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
   }
 }

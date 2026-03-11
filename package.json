@@ -11,7 +11,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "prebuild": "mkdir -p assets/js && cp node_modules/aos/dist/aos.js assets/js/aos.js",
+    "prebuild": "mkdir -p assets/js assets/css && cp node_modules/aos/dist/aos.js assets/js/aos.js && cp node_modules/aos/dist/aos.css assets/css/aos.css",
     "build": "npm run prebuild && hugo --gc --minify"
   }
 }
