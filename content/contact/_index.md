@@ -8,8 +8,6 @@ layout = 'nu'
 +++
 
 ON REPART A ZERO
-
-<section class="">
     <p class="text-mycolor-300 uppercase tracking-[0.3em] text-sm font-medium mb-6"
        data-aos="fade-down" data-aos-duration="600">
       Atelier & entraide
@@ -24,5 +22,3 @@ ON REPART A ZERO
       Électronique, programmation, Arduino, Raspberry Pi, machine à inventer, appareil à réparer…
       Quelle que soit l'étape où tu es coincé, on peut réfléchir ensemble et trouver une piste.
     </p>
-
-</section>
