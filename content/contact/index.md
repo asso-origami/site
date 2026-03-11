@@ -4,15 +4,15 @@ draft = false
 title = 'Contact'
 h1 = 'Contact'
 description = "Les propositions de l'association Origami en QRGA, Caylus et Saint Antonin"
-layout = 'nu'
+
 +++
 
 ON REPART A ZERO
-    <p class="text-mycolor-300 uppercase tracking-[0.3em] text-sm font-medium mb-6"
+    <p class="text-mycolor-900 uppercase tracking-[0.3em] text-sm font-medium mb-6"
        data-aos="fade-down" data-aos-duration="600">
       Atelier & entraide
     </p>
-    <h1 class="!text-4xl sm:!text-5xl xl:!text-6xl !font-bold !text-white !leading-tight !mb-8"
+    <h1 class="!text-4xl sm:!text-5xl xl:!text-6xl !font-bold !text-blakc !leading-tight !mb-8"
         data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
       Ton projet bloqué ?<br>
       <span class="text-mycolor-300">Tu n'es pas seul.</span>
