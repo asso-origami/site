@@ -5,8 +5,8 @@
 @source "hugo_stats.json";
 
 /* deux sources pour le css au niveau de cloudflare */
-@source "../../layouts/**/*.html";
-@source "../../content/**/*.md";
+@source "../../layouts";
+@source "../../content";
 
 /* ── Fontes auto-hébergées ── */
 @font-face {
