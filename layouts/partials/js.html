@@ -1,24 +1,21 @@
-{{/* On tente de récupérer le fichier via le mount */}}
-{{ $aosRes := resources.Get "node_modules/aos/dist/aos.js" }}
+{{/* On récupère le fichier copié par le script prebuild */}}
+{{ $aos := resources.Get "js/aos.js" | minify | fingerprint }}
 
-{{ if $aosRes }}
-  {{ $aos := $aosRes | minify }}
-  <script src="{{ $aos.RelPermalink }}" ></script>
-{{ else }}
-  {{/* Backup au cas où le dossier node_modules est absent lors du build Cloudflare */}}
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+{{ if $aos }}
+  <script src="{{ $aos.RelPermalink }}" integrity="{{ $aos.Data.Integrity }}"></script>
 {{ end }}
 
 <script>
-  // On attend que le DOM et les scripts soient chargés
-  document.addEventListener('DOMContentLoaded', function() {
+  // On utilise window.load pour être certain que TOUT (images, scripts, CSS) est prêt
+  window.addEventListener('load', function() {
     if (typeof AOS !== 'undefined') {
       AOS.init({
         duration: 1000,
-        once: false,
+        once: false
       });
+      console.log("AOS initialisé avec succès !");
     } else {
-      console.error("AOS n'a pas pu être chargé.");
+      console.error("Erreur : Le script AOS n'est pas chargé dans le navigateur.");
     }
   });
 </script>

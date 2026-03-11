@@ -1,0 +1,24 @@
+{{/* On tente de récupérer le fichier via le mount */}}
+{{ $aosRes := resources.Get "node_modules/aos/dist/aos.js" }}
+
+{{ if $aosRes }}
+  {{ $aos := $aosRes | minify }}
+  <script src="{{ $aos.RelPermalink }}" ></script>
+{{ else }}
+  {{/* Backup au cas où le dossier node_modules est absent lors du build Cloudflare */}}
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+{{ end }}
+
+<script>
+  // On attend que le DOM et les scripts soient chargés
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 1000,
+        once: false,
+      });
+    } else {
+      console.error("AOS n'a pas pu être chargé.");
+    }
+  });
+</script>
