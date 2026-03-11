@@ -28,11 +28,11 @@ layout = 'nu'
        data-aos="fade-down" data-aos-duration="600">
       Atelier & entraide
     </p>
-    <h2 class="text-4xl sm:text-5xl xl:text-6xl font-bold text-white leading-tight mb-8"
+    <h1 class="!text-4xl sm:!text-5xl xl:!text-6xl !font-bold !text-white !leading-tight !mb-8"
         data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
       Ton projet bloqué ?<br>
       <span class="text-mycolor-300">Tu n'es pas seul.</span>
-    </h2>
+    </h1>
     <p class="text-lg sm:text-xl text-mycolor-100/80 max-w-2xl mx-auto leading-relaxed mb-10"
        data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
       Électronique, programmation, Arduino, Raspberry Pi, machine à inventer, appareil à réparer…

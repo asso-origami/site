@@ -45,6 +45,11 @@
       "title"
     ],
     "classes": [
+      "!font-bold",
+      "!leading-tight",
+      "!mb-8",
+      "!text-4xl",
+      "!text-white",
       "-top-0",
       "2xl:col-span-4",
       "2xl:grid-cols-6",
@@ -212,6 +217,7 @@
       "shadow-2xl",
       "shadow-sm",
       "shrink-0",
+      "sm:!text-5xl",
       "sm:grid-cols-2",
       "sm:grid-cols-3",
       "sm:h-80",
@@ -268,6 +274,7 @@
       "w-4",
       "w-5",
       "w-full",
+      "xl:!text-6xl",
       "xl:col-span-2",
       "xl:col-span-3",
       "xl:grid-cols-4",
