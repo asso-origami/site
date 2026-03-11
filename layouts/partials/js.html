@@ -2,8 +2,8 @@
 {{ $aosRes := resources.Get "node_modules/aos/dist/aos.js" }}
 
 {{ if $aosRes }}
-  {{ $aos := $aosRes | minify | fingerprint }}
-  <script src="{{ $aos.RelPermalink }}" integrity="{{ $aos.Data.Integrity }}"></script>
+  {{ $aos := $aosRes | minify }}
+  <script src="{{ $aos.RelPermalink }}" ></script>
 {{ else }}
   {{/* Backup au cas où le dossier node_modules est absent lors du build Cloudflare */}}
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
