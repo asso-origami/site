@@ -233,4 +233,3 @@ layout = 'nu'
   </div>
 </section>
 
-{{< contact >}}
