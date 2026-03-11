@@ -9,20 +9,7 @@ layout = 'nu'
 
 ON REPART A ZERO
 
-<section class="relative overflow-hidden min-h-[80vh] flex items-center bg-mycolor-950">
-
-  <!-- Texture de fond subtile -->
-  <div class="absolute inset-0 opacity-10"
-       style="background-image: radial-gradient(circle at 20% 50%, var(--mycolor-400) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--mycolor-300) 0%, transparent 40%);">
-  </div>
-
-  <!-- Grille décorative -->
-  <div class="absolute inset-0 opacity-5"
-       style="background-image: linear-gradient(var(--mycolor-400) 1px, transparent 1px), linear-gradient(90deg, var(--mycolor-400) 1px, transparent 1px); background-size: 48px 48px;">
-  </div>
-
-  <div class="relative z-10 max-w-4xl mx-auto px-6 py-20 text-center">
-    <!-- Accroche principale -->
+<section class="bg-mycolor-950">
     <p class="text-mycolor-300 uppercase tracking-[0.3em] text-sm font-medium mb-6"
        data-aos="fade-down" data-aos-duration="600">
       Atelier & entraide
@@ -37,11 +24,5 @@ ON REPART A ZERO
       Électronique, programmation, Arduino, Raspberry Pi, machine à inventer, appareil à réparer…
       Quelle que soit l'étape où tu es coincé, on peut réfléchir ensemble et trouver une piste.
     </p>
-    <a href="#contact-form"
-       class="inline-block bg-mycolor-400 hover:bg-mycolor-300 text-myblack font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
-       data-aos="zoom-in" data-aos-delay="350">
-      Parler de mon projet →
-    </a>
 
-  </div>
 </section>
