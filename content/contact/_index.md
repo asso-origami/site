@@ -9,7 +9,7 @@ layout = 'nu'
 
 ON REPART A ZERO
 
-<section class="bg-mycolor-950">
+<section class="">
     <p class="text-mycolor-300 uppercase tracking-[0.3em] text-sm font-medium mb-6"
        data-aos="fade-down" data-aos-duration="600">
       Atelier & entraide
