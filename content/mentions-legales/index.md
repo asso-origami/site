@@ -17,9 +17,13 @@ Email : [info@asso-origami.fr](mailto:info@asso-origami.fr)
 
 ## Hébergement
 
-Hébergement assuré par **Netlify**  
-2325 3rd Street, Suite 215, San Francisco, California 94107, États-Unis  
-[https://www.netlify.com](https://www.netlify.com)
+Hébergement assuré par **Cloudflare**  
+Cloudflare, Inc.  
+101 Townsend St  
+San Francisco, CA 94107  
+États-Unis d'Amérique
+
+[cloudflare.com](https://www.cloudflare.com)
 
 ## Cookies
 
