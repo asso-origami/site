@@ -68,7 +68,7 @@
 @layer base {
   /* le body */
   body {
-    @apply max-w-7xl mx-auto bg-mycolor-0 text-myblack px-1 md:px-2 font-sans leading-relaxed tracking-wide;
+    @apply max-w-7xl mx-auto bg-mycolor-0 text-myblack px-1 md:px-2 lg:px-4 font-sans leading-relaxed tracking-wide;
   }
 
   /* les titres */

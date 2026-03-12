@@ -7,33 +7,34 @@
     </h2>
     <p class="text-center text-gray-500 mb-10"
        data-aos="fade-up" data-aos-delay="100">
-      Pas besoin d'avoir tout ficelé. Un brouillon d'idée suffit pour commencer.
+      Quelques mots... <br>Un brouillon d'idée pour commencer...
     </p>
 
     <!-- Formulaire — adapter à ton backend / Netlify Forms / Formspree -->
-    <form name="arnaud-roi" method="POST" data-netlify="true" netlify-honeypot="bot-field"
-          action="/arnaud-roi-logo/merci"     
+    <form name="arnaud" method="POST" 
+          action="https://api.web3forms.com/submit"   
           class="space-y-6"
           data-aos="fade-up" data-aos-delay="150">
-      <input type="hidden" name="form-name" value="contact">
-<input name="bot-field" style="display:none">
+      <input type="hidden" name="access_key" value="a56f9ce8-86c3-4e2d-b656-1527f876a8c1">
+      <input type="hidden" name="subject" value="Pour Arnaud Roi">
+      <input type="hidden" name="redirect" value="https://site-d4a.pages.dev/arnaud-roi-logo/merci">
       <div>
         <label class="block text-sm font-medium text-myblack mb-1" for="name">Nom / Prénom</label>
-        <input id="name" name="name" type="text" required
+        <input id="name" name="Nom" type="text" required
                placeholder="Marie Durand …"
                class="w-full border border-mycolor-200 rounded-xl px-4 py-3 text-myblack placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mycolor-300 transition">
       </div>
 
       <div>
         <label class="block text-sm font-medium text-myblack mb-1" for="email">E-mail</label>
-        <input id="email" name="email" type="email" required
+        <input id="email" name="Courriel" type="email" required
                placeholder="Pour vous répondre"
                class="w-full border border-mycolor-200 rounded-xl px-4 py-3 text-myblack placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mycolor-300 transition">
       </div>
 
       <div>
         <label class="block text-sm font-medium text-myblack mb-1" for="type">Type de projet</label>
-        <select id="type" name="type"
+        <select id="type" name="Catégorie"
                 class="w-full border border-mycolor-200 rounded-xl px-4 py-3 text-myblack focus:outline-none focus:ring-2 focus:ring-mycolor-300 transition bg-white">
           <option value="">— Choisir une catégorie —</option>
           <option value="graphiseme">Graphisme / Design</option>
@@ -44,7 +45,7 @@
 
       <div>
         <label class="block text-sm font-medium text-myblack mb-1" for="message">Votre message</label>
-        <textarea id="message" name="message" rows="5" required
+        <textarea id="message" name="Message" rows="5" required
                   placeholder="Quelques mots pour votre projet..."
                   class="w-full border border-mycolor-200 rounded-xl px-4 py-3 text-myblack placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mycolor-300 transition resize-none"></textarea>
       </div>

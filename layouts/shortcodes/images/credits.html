@@ -32,13 +32,18 @@
 
     {{/* ── AUTEUR ── */}}
     {{ if .author }}
-      <p class="font-semibold text-sm text-gray-800">
-        {{ if .author_url }}
-          <a href="{{ .author_url }}" target="_blank" rel="noopener noreferrer"
-             class="hover:underline text-blue-700">{{ .author }}</a>
-        {{ else }}
-          {{ .author }}
-        {{ end }}
+  <p class="font-semibold text-sm text-gray-800">
+    {{ if .author_url }}
+      {{ if strings.HasPrefix .author_url "http" }}
+        <a href="{{ .author_url }}" target="_blank" rel="noopener noreferrer"
+           class="hover:underline text-blue-700">{{ .author }}</a>
+      {{ else }}
+        <a href="{{ .author_url | relURL }}"
+           class="hover:underline text-blue-700">{{ .author }}</a>
+      {{ end }}
+      {{ else }}
+        {{ .author }}
+      {{ end }}
       </p>
     {{ end }}
 
