@@ -11,19 +11,19 @@
 /* ── Fontes auto-hébergées ── */
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/inter-300.woff2") format("woff2");
+  src: url("/fonts/inter-v20-latin-300.woff2") format("woff2");
   font-weight: 300;
   font-display: swap;
 }
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/inter-400.woff2") format("woff2");
+  src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "Inter";
-  src: url("/fonts/inter-500.woff2") format("woff2");
+  src: url("/fonts/inter-v20-latin-500.woff2") format("woff2");
   font-weight: 500;
   font-display: swap;
 }
@@ -88,5 +88,15 @@
   }
   h4 {
     @apply text-lg font-medium italic py-1.5;
+  }
+}
+
+/* Composants */
+@layer components {
+  .paddingretrait {
+    @apply px-1 md:px-2 lg:px-4;
+  }
+  .margingretrait {
+    @apply mx-1 md:mx-2 lg:mx-4;
   }
 }
