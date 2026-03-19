@@ -116,6 +116,13 @@ title = "Le fauteuil vu de face"
   alt = "Le fauteuil avec sa motorisation montée, vue de face"
   group = "galerie"
 
+[[resources]]
+src = "fauteuil-demonstration.jpg"
+name = "galerie-08"
+title = "Le fauteuil"
+[resources.params]
+  alt = "un fauteuil roulant motorisé à bas coût réalisé par l'associatio norigam"
+  featured = true
 
 
 
