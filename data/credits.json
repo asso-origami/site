@@ -12,8 +12,21 @@
     "via_url": "",
     "caption": ""
   },
-  {
+    {
     "index": 2,
+    "active": true,
+    "src": "icons/logo-ficelle.jpg",
+    "alt ": "icone du groupe ficelle de l'association Origami par Arnaud Roi",
+    "location": "assets",
+    "author": "Arnaud Roi",
+    "author_url": "arnaud-roi-logo/",
+    "license": "",
+    "via": "",
+    "via_url": "",
+    "caption": ""
+  },
+  {
+    "index": 12,
     "active": true,
     "src": "icons/hammer-and-wrench-svgrepo-com.svg",
     "alt ": "Icône de marteau et clé à molette par Joypixels",
@@ -26,7 +39,7 @@
     "caption": ""
   },
     {
-    "index": 3,
+    "index": 13,
     "active": true,
     "src": "icons/power-drill-tools-svgrepo-com.svg",
     "alt": "Icône de perceuse électrique par Muh_zakaria",
@@ -39,7 +52,7 @@
     "caption": ""
   },
   {
-    "index": 4,
+    "index": 14,
     "active": true,
     "src": "icons/screwdriver-svgrepo-com.svg",
     "alt": "Icône de tournevis par SVG Repo",
@@ -52,7 +65,7 @@
     "caption": ""
   },
   {
-    "index": 5,
+    "index": 15,
     "active": true,
     "src": "icons/drill-svgrepo-com.svg",
     "alt": "Icône de perceuse par SVG Repo",
@@ -65,7 +78,7 @@
     "caption": ""
   },
     {
-    "index": 6,
+    "index": 16,
     "active": true,
     "src": "icons/coffee-tea-hot-beverage-drink-steaming-svgrepo-com.svg",
     "alt": "Icône de tasse de café ou thé par Mgraphstudio",
@@ -75,6 +88,20 @@
     "license": "CC Attribution License",
     "via": "SVG Repo",
     "via_url": "https://www.svgrepo.com/",
+    "caption": ""
+  },
+    {
+    "index": 20,
+    "active": true,
+    "src": "grey85-motherhood-7114294_1920.jpg",
+    "alt": "Une main d'enfant et une main de personne âgée enlacées, pour symboliser la main e-nable",
+    "location": "page",
+    "page": "main-enable/",
+    "author": "Gregor Ritter",
+    "author_url": "https://pixabay.com/fr/users/grey85-16121886/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7114294",
+    "license": "Pixabay License",
+    "via": "Pixabay",
+    "via_url": "https://pixabay.com/fr/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7114294",
     "caption": ""
   }
 ]

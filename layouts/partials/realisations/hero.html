@@ -1,0 +1,24 @@
+{{/* ══════════════════════════════════════════
+     HERO — image pleine largeur
+     Front matter : cover (nom partiel image)
+══════════════════════════════════════════ */}}
+<div class="w-full overflow-hidden flex items-center paddingretrait md:mt-2 lg:mt-4" style="max-height: 520px;">
+  {{- $coverResource := .Resources.GetMatch "*cover*" -}}
+  {{- $coverName := "" -}}
+  {{- if $coverResource -}}
+    {{- $coverName = $coverResource.Name -}}
+  {{- else -}}
+    {{- $coverName = or .Params.cover .Params.image "" -}}
+  {{- end -}}
+  {{ if $coverName }}
+    {{ partial "images/img_logic.html" (dict
+        "context"       .
+        "name"          $coverName
+        "alt"           (or .Params.h1 .Title)
+        "class"         "w-full h-full object-cover object-center"
+        "sizes"         "100vw"
+        "fetchpriority" "high"
+        "loading"       "eager"
+    ) }}
+  {{ end }}
+</div>

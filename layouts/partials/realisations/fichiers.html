@@ -1,0 +1,443 @@
+{{/* ══════════════════════════════════════════
+     FICHIERS À TÉLÉCHARGER
+     Supporte : fichiers classiques, audio (MP3/OGG/WAV/M4A), modèles 3D (STL)
+     Front matter :
+     fichiers:
+       - nom: "Main Enable v2"
+         fichier: "main-enable-v2.stl"
+         type: "STL"
+       - nom: "Interview ergothérapeute"
+         fichier: "interview.mp3"
+         type: "MP3"
+       - nom: "Notice PDF"
+         fichier: "notice.pdf"
+         type: "PDF"
+══════════════════════════════════════════ */}}
+{{ with .Params.fichiers }}
+<section class="mb-12">
+  <h2 class="text-xs font-medium tracking-widest uppercase text-mycolor-600 mb-4">
+    Fichiers
+  </h2>
+  <ul class="flex flex-col gap-2">
+    {{ range $idx, $item := . }}
+    {{ $file := $.Page.Resources.GetMatch $item.fichier }}
+    {{ if $file }}
+
+    {{ $typeUpper := upper (or $item.type "") }}
+    {{ $isAudio := or (eq $typeUpper "MP3") (eq $typeUpper "OGG") (eq $typeUpper "WAV") (eq $typeUpper "M4A") }}
+    {{ $isSTL   := eq $typeUpper "STL" }}
+
+    <li>
+
+      {{/* ════════════════════════════════
+           CAS 1 — AUDIO
+      ════════════════════════════════ */}}
+      {{ if $isAudio }}
+      <div class="flex flex-col gap-2 px-4 py-3
+                  rounded-xl border border-mycolor-200 bg-mycolor-50">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <svg class="w-5 h-5 shrink-0 text-mycolor-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"/>
+            </svg>
+            <span class="text-sm font-medium text-mycolor-900 truncate">{{ $item.nom }}</span>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-xs font-medium px-2 py-0.5 rounded bg-mycolor-200 text-mycolor-700 uppercase tracking-wide">
+              {{ or $item.type "audio" }}
+            </span>
+            <a href="{{ $file.RelPermalink }}" download
+               aria-label="Télécharger {{ $item.nom }}"
+               title="Télécharger"
+               class="flex items-center justify-center w-7 h-7 rounded-lg
+                      border border-mycolor-200 bg-white
+                      hover:bg-mycolor-100 hover:border-mycolor-300
+                      transition-colors duration-150">
+              <svg class="w-3.5 h-3.5 text-mycolor-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <audio controls preload="none" class="w-full h-8"
+               style="accent-color: var(--color-mycolor-600, #4b5563);">
+          {{- $mime := "mpeg" -}}
+          {{- if eq $typeUpper "OGG" }}{{- $mime = "ogg" -}}{{ end -}}
+          {{- if eq $typeUpper "WAV" }}{{- $mime = "wav" -}}{{ end -}}
+          {{- if eq $typeUpper "M4A" }}{{- $mime = "mp4" -}}{{ end -}}
+          <source src="{{ $file.RelPermalink }}" type="audio/{{ $mime }}">
+          Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+      </div>
+
+      {{/* ════════════════════════════════
+           CAS 2 — STL (viewer 3D)
+      ════════════════════════════════ */}}
+      {{ else if $isSTL }}
+      {{ $viewerId := printf "stl-viewer-%d" $idx }}
+      {{ $canvasId := printf "stl-canvas-%d" $idx }}
+      {{ $btnId    := printf "stl-btn-%d" $idx }}
+
+      <div class="rounded-xl border border-mycolor-200 bg-mycolor-50 overflow-hidden">
+
+        {{/* Barre titre */}}
+        <div class="flex items-center justify-between gap-3 px-4 py-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <svg class="w-5 h-5 shrink-0 text-mycolor-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+            </svg>
+            <span class="text-sm font-medium text-mycolor-900 truncate">{{ $item.nom }}</span>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-xs font-medium px-2 py-0.5 rounded bg-mycolor-200 text-mycolor-700 uppercase tracking-wide">STL</span>
+            <a href="{{ $file.RelPermalink }}" download
+               aria-label="Télécharger {{ $item.nom }}"
+               title="Télécharger"
+               class="flex items-center justify-center w-7 h-7 rounded-lg
+                      border border-mycolor-200 bg-white
+                      hover:bg-mycolor-100 hover:border-mycolor-300
+                      transition-colors duration-150">
+              <svg class="w-3.5 h-3.5 text-mycolor-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {{/* Zone viewer — masquée par défaut, révélée au clic */}}
+        <div id="{{ $viewerId }}"
+             style="display:none; position:relative; width:100%; height:460px;
+                    background: linear-gradient(160deg, #e8eaed 0%, #d1d5db 50%, #e8eaed 100%);">
+
+          <canvas id="{{ $canvasId }}" style="width:100%; height:100%; display:block;"></canvas>
+
+          {{/* Indicateur de chargement */}}
+          <div id="{{ $viewerId }}-loader"
+               style="position:absolute; inset:0; display:flex; flex-direction:column;
+                      align-items:center; justify-content:center; gap:0.75rem;
+                      background:inherit; pointer-events:none;">
+            <svg style="width:2rem; height:2rem; color:#6b7280; animation: spin 1s linear infinite;"
+                 fill="none" viewBox="0 0 24 24">
+              <circle style="opacity:0.25;" cx="12" cy="12" r="10"
+                      stroke="currentColor" stroke-width="3"></circle>
+              <path style="opacity:0.75;" fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+            <span style="font-size:0.75rem; color:#6b7280;">Chargement du modèle…</span>
+          </div>
+
+          {{/* Aide interaction */}}
+          <div id="{{ $viewerId }}-hint"
+               style="display:none; position:absolute; bottom:0.75rem; left:50%;
+                      transform:translateX(-50%);
+                      background:rgba(0,0,0,0.45); color:#fff;
+                      font-size:0.7rem; padding:0.3rem 0.75rem;
+                      border-radius:99px; pointer-events:none; white-space:nowrap;">
+            Glisser pour tourner · Molette pour zoomer
+          </div>
+
+        </div>
+
+        {{/* Bouton Visualiser */}}
+        <div class="px-4 pb-3" id="{{ $btnId }}-wrap">
+          <button id="{{ $btnId }}"
+                  data-src="{{ $file.RelPermalink }}"
+                  data-viewer="{{ $viewerId }}"
+                  data-canvas="{{ $canvasId }}"
+                  data-wrap="{{ $btnId }}-wrap"
+                  data-hint="{{ $viewerId }}-hint"
+                  data-loader="{{ $viewerId }}-loader"
+                  onclick="initSTLViewer(this)"
+                  class="w-full flex items-center justify-center gap-2 py-2
+                         text-xs font-medium text-mycolor-700
+                         border border-dashed border-mycolor-300
+                         rounded-lg hover:bg-mycolor-100 hover:border-mycolor-400
+                         transition-colors duration-150 cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.641 0-8.574-3.007-9.964-7.178z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Visualiser en 3D
+          </button>
+        </div>
+
+      </div>
+
+      {{/* ════════════════════════════════
+           CAS 3 — FICHIER CLASSIQUE
+      ════════════════════════════════ */}}
+      {{ else }}
+      <a href="{{ $file.RelPermalink }}" download
+         class="flex items-center justify-between gap-4 px-4 py-3
+                rounded-xl border border-mycolor-200 bg-mycolor-50
+                hover:bg-mycolor-100 hover:border-mycolor-300
+                transition-colors duration-150 group">
+        <div class="flex items-center gap-3 min-w-0">
+          <svg class="w-5 h-5 shrink-0 text-mycolor-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+          </svg>
+          <span class="text-sm font-medium text-mycolor-900 truncate">{{ $item.nom }}</span>
+        </div>
+        <span class="text-xs font-medium px-2 py-0.5 rounded bg-mycolor-200 text-mycolor-700 shrink-0 uppercase tracking-wide">
+          {{ or $item.type "fichier" }}
+        </span>
+      </a>
+      {{ end }}
+
+    </li>
+    {{ end }}
+    {{ end }}
+  </ul>
+</section>
+
+{{/* ══════════════════════════════════════════
+     SCRIPT STL VIEWER (chargé une seule fois)
+     Three.js r128 + STLLoader maison (pas dispo sur CDN r128)
+══════════════════════════════════════════ */}}
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<script>
+/* ─── STL Viewer ─────────────────────────────────────────────
+   Chargé à la demande (initSTLViewer) pour ne pas pénaliser
+   les pages qui n'ont pas de fichier STL.
+   Three.js r128 est déjà disponible sur le CDN Cloudflare.
+──────────────────────────────────────────────────────────── */
+function initSTLViewer(btn) {
+
+  /* Afficher le viewer, masquer le bouton */
+  const viewerEl = document.getElementById(btn.dataset.viewer);
+  const wrapEl   = document.getElementById(btn.dataset.wrap);
+  viewerEl.style.display = 'block';
+  wrapEl.style.display   = 'none';
+
+  const canvas   = document.getElementById(btn.dataset.canvas);
+  const loaderId = btn.dataset.loader;
+  const hintId   = btn.dataset.hint;
+  const src      = btn.dataset.src;
+
+  function bootstrap(THREE) {
+
+    /* ── Scène ── */
+    const scene    = new THREE.Scene();
+    const W        = canvas.clientWidth  || canvas.offsetWidth  || 600;
+    const H        = canvas.clientHeight || canvas.offsetHeight || 460;
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W, H, false);
+    renderer.shadowMap.enabled = true;
+
+    const camera = new THREE.PerspectiveCamera(45, W / H, 0.01, 10000);
+
+    /* ── Lumières ── */
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+    const dirA = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirA.position.set(1, 2, 2);
+    dirA.castShadow = true;
+    scene.add(dirA);
+    const dirB = new THREE.DirectionalLight(0xd0d8e8, 0.35);
+    dirB.position.set(-2, -1, -1);
+    scene.add(dirB);
+
+    /* ── Matériau gris neutre plastique mat ── */
+    const material = new THREE.MeshStandardMaterial({
+      color:     0xa0a8b0,
+      roughness: 0.78,
+      metalness: 0.05,
+    });
+
+    /* ── STLLoader inline (léger, binaire + ASCII) ── */
+    function parseBinarySTL(buf) {
+      const dv = new DataView(buf);
+      const triCount = dv.getUint32(80, true);
+      const geo = new THREE.BufferGeometry();
+      const verts  = new Float32Array(triCount * 9);
+      const norms  = new Float32Array(triCount * 9);
+      let off = 84;
+      for (let i = 0; i < triCount; i++) {
+        const nx = dv.getFloat32(off,     true);
+        const ny = dv.getFloat32(off + 4, true);
+        const nz = dv.getFloat32(off + 8, true);
+        off += 12;
+        for (let v = 0; v < 3; v++) {
+          const vi = i * 9 + v * 3;
+          verts[vi]   = dv.getFloat32(off,     true);
+          verts[vi+1] = dv.getFloat32(off + 4, true);
+          verts[vi+2] = dv.getFloat32(off + 8, true);
+          norms[vi]   = nx; norms[vi+1] = ny; norms[vi+2] = nz;
+          off += 12;
+        }
+        off += 2; /* attribute byte count */
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(verts, 3));
+      geo.setAttribute('normal',   new THREE.BufferAttribute(norms, 3));
+      return geo;
+    }
+
+    function parseASCIISTL(text) {
+      const geo   = new THREE.BufferGeometry();
+      const verts = [];
+      const norms = [];
+      const lines = text.split('\n');
+      let nx = 0, ny = 0, nz = 0;
+      for (const raw of lines) {
+        const l = raw.trim();
+        if (l.startsWith('facet normal')) {
+          const p = l.split(/\s+/);
+          nx = parseFloat(p[2]); ny = parseFloat(p[3]); nz = parseFloat(p[4]);
+        } else if (l.startsWith('vertex')) {
+          const p = l.split(/\s+/);
+          verts.push(parseFloat(p[1]), parseFloat(p[2]), parseFloat(p[3]));
+          norms.push(nx, ny, nz);
+        }
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(verts), 3));
+      geo.setAttribute('normal',   new THREE.BufferAttribute(new Float32Array(norms), 3));
+      return geo;
+    }
+
+    function isBinarySTL(buf) {
+      /* Heuristique : si le fichier commence par "solid " mais que la taille
+         correspond à un STL binaire, on préfère binaire */
+      const header = new Uint8Array(buf, 0, 5);
+      const magic  = String.fromCharCode(...header);
+      if (magic !== 'solid') return true;
+      const dv = new DataView(buf);
+      const triCount = dv.getUint32(80, true);
+      return buf.byteLength === 84 + triCount * 50;
+    }
+
+    /* ── Chargement du fichier ── */
+    fetch(src)
+      .then(r => r.arrayBuffer())
+      .then(buf => {
+        const geo = isBinarySTL(buf)
+          ? parseBinarySTL(buf)
+          : parseASCIISTL(new TextDecoder().decode(buf));
+
+        geo.computeBoundingBox();
+        const box    = geo.boundingBox;
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+        const size   = new THREE.Vector3();
+        box.getSize(size);
+        const maxDim = Math.max(size.x, size.y, size.z);
+
+        /* Centrer le modèle à l'origine */
+        geo.translate(-center.x, -center.y, -center.z);
+
+        const mesh = new THREE.Mesh(geo, material);
+        mesh.castShadow    = true;
+        mesh.receiveShadow = true;
+        scene.add(mesh);
+
+        /* Positionner la caméra */
+        const dist = maxDim * 1.8;
+        camera.position.set(dist * 0.6, dist * 0.4, dist);
+        camera.near = maxDim * 0.001;
+        camera.far  = maxDim * 100;
+        camera.updateProjectionMatrix();
+        camera.lookAt(0, 0, 0);
+
+        /* Masquer le loader, afficher l'aide */
+        document.getElementById(loaderId).style.display = 'none';
+        const hint = document.getElementById(hintId);
+        hint.style.display = 'block';
+        setTimeout(() => { hint.style.opacity = '0'; hint.style.transition = 'opacity 1s'; }, 3000);
+        setTimeout(() => { hint.style.display = 'none'; }, 4200);
+
+        /* ── OrbitControls léger inline ── */
+        let isDown = false, lastX = 0, lastY = 0;
+        let rotX = 0.3, rotY = 0.5;
+        let zoom = 1;
+
+        canvas.addEventListener('mousedown',  e => { isDown = true; lastX = e.clientX; lastY = e.clientY; });
+        canvas.addEventListener('mouseup',    () => { isDown = false; });
+        canvas.addEventListener('mouseleave', () => { isDown = false; });
+        canvas.addEventListener('mousemove',  e => {
+          if (!isDown) return;
+          rotY += (e.clientX - lastX) * 0.008;
+          rotX += (e.clientY - lastY) * 0.008;
+          rotX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, rotX));
+          lastX = e.clientX; lastY = e.clientY;
+        });
+        canvas.addEventListener('wheel', e => {
+          e.preventDefault();
+          zoom *= 1 + e.deltaY * 0.001;
+          zoom = Math.max(0.2, Math.min(5, zoom));
+        }, { passive: false });
+
+        /* Touch */
+        let lastTouchDist = 0;
+        canvas.addEventListener('touchstart', e => {
+          if (e.touches.length === 1) { isDown = true; lastX = e.touches[0].clientX; lastY = e.touches[0].clientY; }
+          if (e.touches.length === 2) { lastTouchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); }
+        }, { passive: true });
+        canvas.addEventListener('touchend',   () => { isDown = false; }, { passive: true });
+        canvas.addEventListener('touchmove',  e => {
+          if (e.touches.length === 1 && isDown) {
+            rotY += (e.touches[0].clientX - lastX) * 0.008;
+            rotX += (e.touches[0].clientY - lastY) * 0.008;
+            rotX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, rotX));
+            lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
+          }
+          if (e.touches.length === 2) {
+            const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            zoom *= lastTouchDist / d;
+            zoom = Math.max(0.2, Math.min(5, zoom));
+            lastTouchDist = d;
+          }
+        }, { passive: true });
+
+        /* ── Boucle de rendu ── */
+        let autoRot = true;
+        canvas.addEventListener('mousedown', () => { autoRot = false; });
+
+        function animate() {
+          requestAnimationFrame(animate);
+          if (autoRot) rotY += 0.005;
+          mesh.rotation.x = rotX;
+          mesh.rotation.y = rotY;
+
+          /* Appliquer zoom via position caméra */
+          const base = dist;
+          camera.position.set(
+            Math.sin(rotY) * Math.cos(rotX) * base * zoom,
+            Math.sin(rotX) * base * zoom,
+            Math.cos(rotY) * Math.cos(rotX) * base * zoom
+          );
+          camera.lookAt(0, 0, 0);
+
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        /* Resize */
+        new ResizeObserver(() => {
+          const w = canvas.clientWidth, h = canvas.clientHeight;
+          renderer.setSize(w, h, false);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }).observe(canvas);
+
+      })
+      .catch(() => {
+        document.getElementById(loaderId).innerHTML =
+          '<span style="font-size:0.75rem;color:#b91c1c;">Erreur de chargement du fichier STL.</span>';
+      });
+  }
+
+  /* Charger Three.js si pas encore présent */
+  if (window.THREE) {
+    bootstrap(window.THREE);
+  } else {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    s.onload = () => bootstrap(window.THREE);
+    document.head.appendChild(s);
+  }
+}
+</script>
+
+{{ end }}

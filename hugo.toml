@@ -42,3 +42,29 @@ title = 'Origami — Association FabLab en Quercy Rouergue | Projets makers & cr
 [resources]
   [resources._gen]
     publishDiff = true
+
+
+[[menus.main]]
+  name = "Accueil"
+  url = "/"
+  weight = 1
+
+[[menus.main]]
+  name = "Réalisations"
+  url = "/realisations/"
+  weight = 2
+
+[[menus.main]]
+  name = "Projets"
+  url = "/projets/"
+  weight = 3
+
+[[menus.main]]
+  name = "Repair Café"
+  url = "/repair-cafe/"
+  weight = 4
+
+[[menus.main]]
+  name = "Contact"
+  url = "/contact/"
+  weight = 5

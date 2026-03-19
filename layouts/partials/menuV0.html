@@ -1,0 +1,168 @@
+{{/* ══════════════════════════════════════════
+     MENU
+     - Desktop : liens horizontaux
+     - Mobile  : hamburger + overlay fullscreen mycolor-950
+     - Header  : transparent → plein au scroll, hide/show
+══════════════════════════════════════════ */}}
+
+<header id="site-header"
+        class="fixed top-0 left-0 right-0 z-50
+               transition-all duration-300
+               bg-transparent">
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 sm:h-20">
+
+    {{/* ── Logo ── */}}
+    <a href="{{ "/" | relURL }}" class="flex items-center gap-2 z-60 relative">
+
+        <img src="{{ "/images/logos/Logo.svg" | relURL }}"
+             alt="{{ site.Title }}"
+             width="40" height="40"
+             class="w-10 h-10 object-contain">
+    </a>
+
+    {{/* ── Nav desktop ── */}}
+    <nav class="hidden md:flex items-center gap-8">
+      {{ range site.Menus.main }}
+      <a href="{{ .URL }}"
+         class="nav-link relative text-sm font-medium tracking-wide
+                text-mycolor-900 hover:text-mycolor-600
+                transition-colors duration-200
+                after:absolute after:bottom-0 after:left-0 after:right-0
+                after:h-px after:bg-mycolor-600
+                after:scale-x-0 hover:after:scale-x-100
+                after:transition-transform after:duration-200 after:origin-left">
+        {{ .Name }}
+      </a>
+      {{ end }}
+    </nav>
+
+    {{/* ── Bouton hamburger mobile ── */}}
+    <button id="menu-toggle"
+            aria-label="Ouvrir le menu"
+            aria-expanded="false"
+            class="md:hidden relative z-60 w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+      <span class="hamburger-bar block w-6 h-px bg-mycolor-900 transition-all duration-300 origin-center"></span>
+      <span class="hamburger-bar block w-6 h-px bg-mycolor-900 transition-all duration-300 origin-center"></span>
+      <span class="hamburger-bar block w-6 h-px bg-mycolor-900 transition-all duration-300 origin-center"></span>
+    </button>
+
+  </div>
+</header>
+
+{{/* ══════════════════════════════════════════
+     OVERLAY MOBILE fullscreen
+══════════════════════════════════════════ */}}
+<div id="mobile-overlay"
+     class="fixed inset-0 z-40 bg-mycolor-950
+            flex flex-col items-center justify-center
+            opacity-0 pointer-events-none
+            transition-opacity duration-300">
+
+  <nav class="flex flex-col items-center gap-8">
+    {{ range $i, $item := site.Menus.main }}
+    <a href="{{ $item.URL }}"
+       class="mobile-nav-item
+              text-3xl font-semibold text-mycolor-100
+              hover:text-mycolor-400 transition-colors duration-200
+              translate-y-4 opacity-0"
+       style="transition-delay: {{ mul $i 60 }}ms;">
+      {{ $item.Name }}
+    </a>
+    {{ end }}
+  </nav>
+
+</div>
+
+{{/* ══════════════════════════════════════════
+     JS — header scroll + hamburger
+══════════════════════════════════════════ */}}
+<script>
+(function () {
+  const header   = document.getElementById('site-header');
+  const toggle   = document.getElementById('menu-toggle');
+  const overlay  = document.getElementById('mobile-overlay');
+  const bars     = document.querySelectorAll('.hamburger-bar');
+  const logoText = document.getElementById('logo-text');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const mobileItems = document.querySelectorAll('.mobile-nav-item');
+
+  let lastScroll = 0;
+  let menuOpen   = false;
+
+  /* ── Scroll : hide/show + transparent→plein ── */
+  window.addEventListener('scroll', function () {
+    if (menuOpen) return;
+    const current = window.scrollY;
+
+    /* transparent → plein */
+    if (current > 60) {
+      header.classList.add('bg-mycolor-0', 'shadow-sm');
+      header.classList.remove('bg-transparent');
+      logoText.classList.replace('text-mycolor-950', 'text-mycolor-950');
+      navLinks.forEach(l => l.classList.replace('text-mycolor-900', 'text-mycolor-900'));
+    } else {
+      header.classList.remove('bg-mycolor-0', 'shadow-sm');
+      header.classList.add('bg-transparent');
+    }
+
+    /* hide/show au scroll */
+    if (current > lastScroll && current > 120) {
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      header.style.transform = 'translateY(0)';
+    }
+    lastScroll = current <= 0 ? 0 : current;
+  }, { passive: true });
+
+  /* ── Hamburger : open/close ── */
+  toggle.addEventListener('click', function () {
+    menuOpen = !menuOpen;
+    toggle.setAttribute('aria-expanded', menuOpen);
+
+    if (menuOpen) {
+      /* Ouvrir */
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('opacity-100');
+      /* Croix */
+      bars[0].style.transform = 'translateY(6px) rotate(45deg)';
+      bars[1].style.opacity   = '0';
+      bars[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+      /* Barres en blanc sur fond sombre */
+      bars.forEach(b => b.classList.replace('bg-mycolor-900', 'bg-mycolor-100'));
+      logoText.classList.replace('text-mycolor-950', 'text-mycolor-100');
+      /* Stagger items */
+      mobileItems.forEach((item, i) => {
+        setTimeout(() => {
+          item.classList.remove('opacity-0', 'translate-y-4');
+          item.classList.add('opacity-100', 'translate-y-0');
+          item.style.transition = 'opacity 300ms ease, transform 300ms ease';
+        }, i * 60);
+      });
+      document.body.style.overflow = 'hidden';
+    } else {
+      /* Fermer */
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.classList.remove('opacity-100');
+      /* Hamburger */
+      bars[0].style.transform = '';
+      bars[1].style.opacity   = '1';
+      bars[2].style.transform = '';
+      bars.forEach(b => b.classList.replace('bg-mycolor-100', 'bg-mycolor-900'));
+      logoText.classList.replace('text-mycolor-100', 'text-mycolor-950');
+      /* Reset items */
+      mobileItems.forEach(item => {
+        item.classList.add('opacity-0', 'translate-y-4');
+        item.classList.remove('opacity-100', 'translate-y-0');
+      });
+      document.body.style.overflow = '';
+    }
+  });
+
+  /* Fermer au clic sur un lien */
+  mobileItems.forEach(item => {
+    item.addEventListener('click', () => toggle.click());
+  });
+
+})();
+</script>

@@ -1,0 +1,387 @@
+{{ define "main" }}
+
+{{/* ══════════════════════════════════════════
+     HERO — image pleine largeur
+     Front matter : cover (nom partiel image)
+══════════════════════════════════════════ */}}
+<div class="w-full overflow-hidden flex items-center paddingretrait md:mt-2 lg:mt-4" style="max-height: 520px;">
+  {{- $coverResource := .Resources.GetMatch "*cover*" -}}
+  {{- $coverName := "" -}}
+  {{- if $coverResource -}}
+    {{- $coverName = $coverResource.Name -}}
+  {{- else -}}
+    {{- $coverName = or .Params.cover .Params.image "" -}}
+  {{- end -}}
+  {{ if $coverName }}
+    {{ partial "images/img_logic.html" (dict
+        "context"       .
+        "name"          $coverName
+        "alt"           (or .Params.h1 .Title)
+        "class"         "w-full h-full object-cover object-center"
+        "sizes"         "100vw"
+        "fetchpriority" "high"
+        "loading"       "eager"
+    ) }}
+  {{ end }}
+</div>
+
+<div class="max-w-3xl mx-auto px-4 py-12 sm:py-16">
+
+  {{/* ══════════════════════════════════════════
+       EN-TÊTE
+  ══════════════════════════════════════════ */}}
+  <header class="mb-10">
+
+    {{/* Tags */}}
+    {{ with .Params.tags }}
+    <div class="flex flex-wrap gap-2 mb-4">
+      {{ range . }}
+      <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-mycolor-100 text-mycolor-800 border border-mycolor-200">
+        {{ . }}
+      </span>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    {{/* Titre */}}
+    <h1 class="text-3xl sm:text-4xl font-semibold text-mycolor-950 leading-tight mb-4">
+      {{ or .Params.h1 .Title }}
+    </h1>
+
+    {{/* Description */}}
+    {{ with .Description }}
+    <p class="text-base text-mycolor-700 leading-relaxed max-w-2xl">
+      {{ . }}
+    </p>
+    {{ end }}
+
+  </header>
+
+  {{/* ══════════════════════════════════════════
+       INTERVENANTS
+       Front matter :
+       intervenants:
+         - nom: "Prénom Nom"
+           role: "Ergothérapeute"
+  ══════════════════════════════════════════ */}}
+  {{ with .Params.intervenants }}
+  <section class="mb-12">
+    <h2 class="text-xs font-medium tracking-widest uppercase text-mycolor-600 mb-4">
+      Intervenants
+    </h2>
+    <ul class="flex flex-wrap gap-3">
+      {{ range . }}
+      <li class="flex items-center gap-3 bg-mycolor-50 border border-mycolor-100 rounded-xl px-4 py-2.5">
+        <div class="w-8 h-8 rounded-full bg-mycolor-200 flex items-center justify-center shrink-0">
+          <span class="text-xs font-semibold text-mycolor-800">
+            {{ substr .nom 0 1 }}{{ if .prenom }}{{ substr .prenom 0 1 }}{{ end }}
+          </span>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-mycolor-900 leading-none">{{ .nom }}</p>
+          {{ with .role }}<p class="text-xs text-mycolor-600 mt-0.5">{{ . }}</p>{{ end }}
+        </div>
+      </li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  {{/* ══════════════════════════════════════════
+       ÉTAPES DU PROJET
+       Front matter :
+       etapes:
+         - titre: "Modélisation"
+           texte: "..."
+  ══════════════════════════════════════════ */}}
+  {{ with .Params.etapes }}
+  <section class="mb-12">
+    <h2 class="text-xs font-medium tracking-widest uppercase text-mycolor-600 mb-6">
+      Étapes du projet
+    </h2>
+    <ol class="relative border-l border-mycolor-200 flex flex-col gap-8 pl-6">
+      {{ range $i, $e := . }}
+      <li class="relative">
+        <span class="absolute -left-[1.65rem] top-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-mycolor-100 border border-mycolor-300 text-xs font-semibold text-mycolor-800">
+          {{ add $i 1 }}
+        </span>
+        <h3 class="text-sm font-semibold text-mycolor-900 mb-1">{{ $e.titre }}</h3>
+        {{ with $e.texte | safeHTML }}
+        <p class="text-sm text-mycolor-700 leading-relaxed">{{ . }}</p>
+        {{ end }}
+      </li>
+      {{ end }}
+    </ol>
+  </section>
+  {{ end }}
+
+  {{/* ══════════════════════════════════════════
+       CONTENU LIBRE (markdown)
+  ══════════════════════════════════════════ */}}
+  {{ with .Content }}
+  <section class="mb-12 prose prose-sm max-w-none
+                  prose-headings:text-mycolor-900 prose-headings:font-semibold
+                  prose-p:text-mycolor-700 prose-p:leading-relaxed
+                  prose-a:text-mycolor-800 prose-a:underline
+                  prose-strong:text-mycolor-900">
+    {{ . }}
+  </section>
+  {{ end }}
+
+{{/* ══════════════════════════════════════════
+     GALERIE + LIGHTBOX CUSTOM
+══════════════════════════════════════════ */}}
+
+{{ $galerie := .Resources.Match "*galerie*" }}
+{{ with $galerie }}
+
+<section class="mb-12">
+  <h2 class="text-xs font-medium tracking-widest uppercase text-mycolor-600 mb-4">
+    Galerie
+  </h2>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+    {{ range $i, $img := . }}
+    <button type="button"
+            class="gallery-thumb overflow-hidden rounded-lg aspect-square bg-mycolor-50 relative group/img block w-full"
+            data-index="{{ $i }}"
+            aria-label="Ouvrir {{ $img.Title }}">
+      {{ partial "images/img_logic.html" (dict
+          "context"  $.Page
+          "src"      $img.Name
+          "alt"      (or $img.Title $.Title)
+          "class"    "w-full h-full object-cover object-center group-hover/img:scale-[1.04] transition-transform duration-300 pointer-events-none"
+          "sizes"    "(min-width: 640px) 33vw, 50vw"
+      ) }}
+      {{ with $img.Title }}
+      <span class="absolute bottom-0 left-0 right-0
+                   bg-mycolor-950/70 text-mycolor-0
+                   text-xs px-2 py-1.5 text-center
+                   translate-y-full group-hover/img:translate-y-0
+                   transition-transform duration-200 ease-out
+                   pointer-events-none">
+        {{ . }}
+      </span>
+      {{ end }}
+    </button>
+    {{ end }}
+  </div>
+
+</section>
+
+{{/* ══════════════════════════════════════════
+     LIGHTBOX
+══════════════════════════════════════════ */}}
+<div id="lightbox"
+     role="dialog" aria-modal="true" aria-label="Galerie"
+     style="display:none; position:fixed; inset:0; z-index:9000;
+            background:rgba(0,0,0,0.92);
+            flex-direction:column; align-items:center; justify-content:center;">
+
+  {{/* ── Croix fermer — haut droite ── */}}
+  <button id="lb-close" aria-label="Fermer"
+          style="position:absolute; top:1rem; right:1rem; z-index:1;
+                 background:none; border:none; cursor:pointer; padding:0.5rem;
+                 color: var(--color-mycolor-300); line-height:1;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+
+  {{/* ── Zone image + flèches ── */}}
+  <div style="display:flex; align-items:center; gap:1rem;
+              width:100%; max-width:1200px; padding:0 1rem;">
+
+    <button id="lb-prev" aria-label="Image précédente"
+            style="flex-shrink:0; background:none;
+                   border:0.5px solid var(--color-mycolor-700);
+                   border-radius:50%; width:44px; height:44px; cursor:pointer;
+                   display:flex; align-items:center; justify-content:center;
+                   color: var(--color-mycolor-200);
+                   transition: border-color 0.2s, color 0.2s;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
+    <div style="flex:1; display:flex; align-items:center; justify-content:center;
+                max-height:80vh; overflow:hidden;">
+      <img id="lb-img" src="" alt=""
+           style="max-width:100%; max-height:80vh;
+                  object-fit:contain; border-radius:4px;
+                  transition: opacity 0.2s ease;">
+    </div>
+
+    <button id="lb-next" aria-label="Image suivante"
+            style="flex-shrink:0; background:none;
+                   border:0.5px solid var(--color-mycolor-700);
+                   border-radius:50%; width:44px; height:44px; cursor:pointer;
+                   display:flex; align-items:center; justify-content:center;
+                   color: var(--color-mycolor-200);
+                   transition: border-color 0.2s, color 0.2s;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+  </div>
+
+  {{/* ── Barre basse : titre + compteur centrés ── */}}
+  <div style="position:absolute; bottom:1.25rem; left:0; right:0;
+              display:flex; align-items:center; justify-content:center; gap:1rem;">
+    <span id="lb-title"
+          style="font-size:0.875rem; font-weight:500;
+                 color: var(--color-mycolor-100);
+                 white-space:nowrap; overflow:hidden;
+                 text-overflow:ellipsis; max-width:60%;"></span>
+    <span id="lb-counter"
+          style="font-size:0.8rem; flex-shrink:0;
+                 color: var(--color-mycolor-500);
+                 font-variant-numeric: tabular-nums;"></span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+
+  const images = [
+    {{ range $i, $img := . }}
+    {{ $full := $img.Resize "1600x webp q82" }}
+    { src: {{ $full.RelPermalink }}, title: {{ or $img.Title "" }} }{{ if lt $i (sub (len $galerie) 1) }},{{ end }}
+    {{ end }}
+  ];
+
+  const total = images.length;
+  let current = 0;
+  let touchStartX = 0;
+
+  const lb        = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lb-img');
+  const lbTitle   = document.getElementById('lb-title');
+  const lbCounter = document.getElementById('lb-counter');
+  const lbClose   = document.getElementById('lb-close');
+  const lbPrev    = document.getElementById('lb-prev');
+  const lbNext    = document.getElementById('lb-next');
+
+  function show(index) {
+    current = ((index % total) + total) % total;
+    const item = images[current];
+    lbImg.style.opacity = '0';
+    setTimeout(() => {
+      lbImg.src             = item.src;
+      lbImg.alt             = item.title;
+      lbTitle.textContent   = item.title;
+      lbCounter.textContent = (current + 1) + '\u00a0/\u00a0' + total;
+      lbImg.style.opacity   = '1';
+    }, 150);
+  }
+
+  function open(index) {
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    show(index);
+  }
+
+  function close() {
+    lb.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gallery-thumb').forEach(btn => {
+    btn.addEventListener('click', () => open(parseInt(btn.dataset.index)));
+  });
+
+  lbClose.addEventListener('click', close);
+  lbPrev.addEventListener('click',  () => show(current - 1));
+  lbNext.addEventListener('click',  () => show(current + 1));
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (lb.style.display === 'none') return;
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === 'Escape')     close();
+  });
+
+  lb.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  lb.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) show(current + 1);
+      else          show(current - 1);
+    }
+  }, { passive: true });
+
+})();
+</script>
+
+{{ end }}
+
+  {{/* ══════════════════════════════════════════
+       FICHIERS À TÉLÉCHARGER
+       Front matter :
+       fichiers:
+         - nom: "Main Enable v2"
+           fichier: "main-enable-v2.stl"
+           type: "STL"
+  ══════════════════════════════════════════ */}}
+  {{ with .Params.fichiers }}
+  <section class="mb-12">
+    <h2 class="text-xs font-medium tracking-widest uppercase text-mycolor-600 mb-4">
+      Fichiers
+    </h2>
+    <ul class="flex flex-col gap-2">
+      {{ range . }}
+      {{ $file := $.Page.Resources.GetMatch .fichier }}
+      {{ if $file }}
+      <li>
+        <a href="{{ $file.RelPermalink }}"
+           download
+           class="flex items-center justify-between gap-4 px-4 py-3
+                  rounded-xl border border-mycolor-200 bg-mycolor-50
+                  hover:bg-mycolor-100 hover:border-mycolor-300
+                  transition-colors duration-150 group">
+          <div class="flex items-center gap-3 min-w-0">
+            <svg class="w-5 h-5 shrink-0 text-mycolor-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+            </svg>
+            <span class="text-sm font-medium text-mycolor-900 truncate">{{ .nom }}</span>
+          </div>
+          <span class="text-xs font-medium px-2 py-0.5 rounded bg-mycolor-200 text-mycolor-700 shrink-0 uppercase tracking-wide">
+            {{ or .type "fichier" }}
+          </span>
+        </a>
+      </li>
+      {{ end }}
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  {{/* ══════════════════════════════════════════
+       NAVIGATION — retour à /realisations
+  ══════════════════════════════════════════ */}}
+  <nav class="pt-8 border-t border-mycolor-100">
+    <a href="{{ "/realisations" | relURL }}"
+       class="inline-flex items-center gap-2 text-sm font-medium text-mycolor-700
+              hover:text-mycolor-950 transition-colors duration-150 group">
+      <svg class="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+           fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+      </svg>
+      Toutes les réalisations
+    </a>
+  </nav>
+
+</div>
+
+{{ end }}

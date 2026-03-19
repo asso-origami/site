@@ -1,0 +1,12 @@
+{{/* ══════════════════════════════════════════
+     CONTENU LIBRE (markdown)
+══════════════════════════════════════════ */}}
+{{ with .Content }}
+<section class="mb-12 prose prose-sm max-w-none
+                prose-headings:text-mycolor-900 prose-headings:font-semibold
+                prose-p:text-mycolor-700 prose-p:leading-relaxed
+                prose-a:text-mycolor-800 prose-a:underline
+                prose-strong:text-mycolor-900">
+  {{ . }}
+</section>
+{{ end }}

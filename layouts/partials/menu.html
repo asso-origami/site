@@ -1,0 +1,158 @@
+{{/* ══════════════════════════════════════════
+     MENU
+     - Desktop : liens horizontaux, couleur adaptative
+     - Mobile  : hamburger + overlay fullscreen mycolor-950
+     - Header  : transparent → plein au scroll, hide/show
+══════════════════════════════════════════ */}}
+
+<header id="site-header"
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style="background:transparent;">
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 sm:h-20">
+
+    {{/* ── Logo ── */}}
+    <a href="{{ "/" | relURL }}" class="flex items-center gap-2 relative" style="z-index:60">
+      <img src="{{ "/images/logos/Logo.svg" | relURL }}"
+           alt="{{ site.Title }}"
+           width="40" height="40"
+           class="w-10 h-10 object-contain">
+      <span id="logo-text"
+            class="text-sm font-semibold tracking-wide transition-colors duration-300"
+            style="color: var(--color-mycolor-100);">
+        Origami
+      </span>
+    </a>
+
+    {{/* ── Nav desktop ── */}}
+    <nav class="hidden md:flex items-center gap-8">
+      {{ range site.Menus.main }}
+      <a href="{{ .URL }}"
+         class="nav-link relative text-sm font-medium tracking-wide transition-colors duration-200
+                after:absolute after:bottom-0 after:left-0 after:right-0
+                after:h-px after:bg-current
+                after:scale-x-0 hover:after:scale-x-100
+                after:transition-transform after:duration-200 after:origin-left"
+         style="color: var(--color-mycolor-100);">
+        {{ .Name }}
+      </a>
+      {{ end }}
+    </nav>
+
+    {{/* ── Bouton hamburger mobile ── */}}
+    <button id="menu-toggle"
+            aria-label="Ouvrir le menu"
+            aria-expanded="false"
+            class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5"
+            style="position:relative; z-index:60;">
+      <span class="hamburger-bar block w-6 transition-all duration-300 origin-center"
+            style="height:1px; background-color: var(--color-mycolor-100);"></span>
+      <span class="hamburger-bar block w-6 transition-all duration-300 origin-center"
+            style="height:1px; background-color: var(--color-mycolor-100);"></span>
+      <span class="hamburger-bar block w-6 transition-all duration-300 origin-center"
+            style="height:1px; background-color: var(--color-mycolor-100);"></span>
+    </button>
+
+  </div>
+</header>
+
+{{/* ══════════════════════════════════════════
+     OVERLAY MOBILE fullscreen
+══════════════════════════════════════════ */}}
+<div id="mobile-overlay"
+     class="fixed inset-0 flex flex-col items-center justify-center transition-opacity duration-300"
+     style="z-index:40; background-color: var(--color-mycolor-950); opacity:0; pointer-events:none;">
+
+  <nav class="flex flex-col items-center gap-8">
+    {{ range $i, $item := site.Menus.main }}
+    <a href="{{ $item.URL }}"
+       class="mobile-nav-item text-3xl font-semibold hover:opacity-70 transition-opacity duration-200"
+       style="color: var(--color-mycolor-100); opacity:0; transform:translateY(16px); transition: opacity 300ms ease {{ mul $i 60 }}ms, transform 300ms ease {{ mul $i 60 }}ms;">
+      {{ $item.Name }}
+    </a>
+    {{ end }}
+  </nav>
+
+</div>
+
+<script>
+(function () {
+  const header      = document.getElementById('site-header');
+  const toggle      = document.getElementById('menu-toggle');
+  const overlay     = document.getElementById('mobile-overlay');
+  const bars        = document.querySelectorAll('.hamburger-bar');
+  const logoText    = document.getElementById('logo-text');
+  const navLinks    = document.querySelectorAll('.nav-link');
+  const mobileItems = document.querySelectorAll('.mobile-nav-item');
+
+  let lastScroll = 0;
+  let menuOpen   = false;
+
+  function setLight() {
+    header.style.backgroundColor = 'var(--color-mycolor-0)';
+    header.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)';
+    navLinks.forEach(l => { l.style.color = 'var(--color-mycolor-900)'; });
+    logoText.style.color = 'var(--color-mycolor-950)';
+    bars.forEach(b => { b.style.backgroundColor = 'var(--color-mycolor-900)'; });
+  }
+
+  function setTransparent() {
+    header.style.backgroundColor = 'transparent';
+    header.style.boxShadow = 'none';
+    navLinks.forEach(l => { l.style.color = 'var(--color-mycolor-100)'; });
+    logoText.style.color = 'var(--color-mycolor-100)';
+    bars.forEach(b => { b.style.backgroundColor = 'var(--color-mycolor-100)'; });
+  }
+
+  /* ── Scroll ── */
+  window.addEventListener('scroll', function () {
+    if (menuOpen) return;
+    const current = window.scrollY;
+    if (current > 60) { setLight(); } else { setTransparent(); }
+    if (current > lastScroll && current > 120) {
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      header.style.transform = 'translateY(0)';
+    }
+    lastScroll = current <= 0 ? 0 : current;
+  }, { passive: true });
+
+  /* ── Hamburger ── */
+  toggle.addEventListener('click', function () {
+    menuOpen = !menuOpen;
+    toggle.setAttribute('aria-expanded', menuOpen);
+
+    if (menuOpen) {
+      overlay.style.opacity = '1';
+      overlay.style.pointerEvents = 'auto';
+      bars[0].style.transform = 'translateY(6px) rotate(45deg)';
+      bars[1].style.opacity   = '0';
+      bars[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+      bars.forEach(b => { b.style.backgroundColor = 'var(--color-mycolor-100)'; });
+      logoText.style.color = 'var(--color-mycolor-100)';
+      mobileItems.forEach(item => {
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      });
+      document.body.style.overflow = 'hidden';
+    } else {
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      bars[0].style.transform = '';
+      bars[1].style.opacity   = '1';
+      bars[2].style.transform = '';
+      mobileItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(16px)';
+      });
+      document.body.style.overflow = '';
+      if (window.scrollY > 60) { setLight(); } else { setTransparent(); }
+    }
+  });
+
+  mobileItems.forEach(item => {
+    item.addEventListener('click', () => { if (menuOpen) toggle.click(); });
+  });
+
+})();
+</script>

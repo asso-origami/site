@@ -1,0 +1,27 @@
+{{/* ══════════════════════════════════════════
+     ÉTAPES DU PROJET
+     Front matter :
+     etapes:
+       - titre: "Modélisation"
+         texte: "..."
+══════════════════════════════════════════ */}}
+{{ with .Params.etapes }}
+<section class="mb-12">
+  <h2 class="text-xs font-medium tracking-widest uppercase text-mycolor-600 mb-6">
+    Étapes du projet
+  </h2>
+  <ol class="relative border-l border-mycolor-200 flex flex-col gap-8 pl-6">
+    {{ range $i, $e := . }}
+    <li class="relative">
+      <span class="absolute -left-[1.65rem] top-0.5 flex items-center justify-center w-6 h-6 rounded-full bg-mycolor-100 border border-mycolor-300 text-xs font-semibold text-mycolor-800">
+        {{ add $i 1 }}
+      </span>
+      <h3 class="text-sm font-semibold text-mycolor-900 mb-1">{{ $e.titre }}</h3>
+      {{ with $e.texte | safeHTML }}
+      <p class="text-sm text-mycolor-700 leading-relaxed">{{ . }}</p>
+      {{ end }}
+    </li>
+    {{ end }}
+  </ol>
+</section>
+{{ end }}

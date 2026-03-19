@@ -1,0 +1,31 @@
+{{ define "main" }}
+
+{{ partial "realisations/hero.html" . }}
+
+<div class="max-w-3xl mx-auto px-4 py-12 sm:py-16">
+
+  {{ partial "realisations/header.html" . }}
+  {{ partial "realisations/intervenants.html" . }}
+  {{ partial "realisations/etapes.html" . }}
+  {{ partial "realisations/contenu.html" . }}
+  {{ partial "realisations/galerie.html" . }}
+  {{ partial "realisations/fichiers.html" . }}
+
+  {{/* ══════════════════════════════════════════
+       NAVIGATION — retour à /realisations
+  ══════════════════════════════════════════ */}}
+  <nav class="pt-8 border-t border-mycolor-100">
+    <a href="{{ "/realisations" | relURL }}"
+       class="inline-flex items-center gap-2 text-sm font-medium text-mycolor-700
+              hover:text-mycolor-950 transition-colors duration-150 group">
+      <svg class="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+           fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+      </svg>
+      Toutes les réalisations
+    </a>
+  </nav>
+
+</div>
+
+{{ end }}

@@ -1,0 +1,198 @@
+{{/* ══════════════════════════════════════════
+     GALERIE + LIGHTBOX CUSTOM
+     Images nommées *galerie* dans le page bundle
+══════════════════════════════════════════ */}}
+
+{{ $galerie := .Resources.Match "*galerie*" }}
+{{ with $galerie }}
+
+<section class="mb-12">
+  <h2 class="text-xs font-medium tracking-widest uppercase text-mycolor-600 mb-4">
+    Galerie
+  </h2>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+    {{ range $i, $img := . }}
+    <button type="button"
+            class="gallery-thumb overflow-hidden rounded-lg aspect-square bg-mycolor-50 relative group/img block w-full"
+            data-index="{{ $i }}"
+            aria-label="Ouvrir {{ $img.Title }}">
+      {{ partial "images/img_logic.html" (dict
+          "context"  $.Page
+          "src"      $img.Name
+          "alt"      (or $img.Title $.Title)
+          "class"    "w-full h-full object-cover object-center group-hover/img:scale-[1.04] transition-transform duration-300 pointer-events-none"
+          "sizes"    "(min-width: 640px) 33vw, 50vw"
+      ) }}
+      {{ with $img.Title }}
+      <span class="absolute bottom-0 left-0 right-0
+                   bg-mycolor-950/70 text-mycolor-0
+                   text-xs px-2 py-1.5 text-center
+                   translate-y-full group-hover/img:translate-y-0
+                   transition-transform duration-200 ease-out
+                   pointer-events-none">
+        {{ . }}
+      </span>
+      {{ end }}
+    </button>
+    {{ end }}
+  </div>
+
+</section>
+
+{{/* ══════════════════════════════════════════
+     LIGHTBOX
+══════════════════════════════════════════ */}}
+<div id="lightbox"
+     role="dialog" aria-modal="true" aria-label="Galerie"
+     style="display:none; position:fixed; inset:0; z-index:9000;
+            background:rgba(0,0,0,0.92);
+            flex-direction:column; align-items:center; justify-content:center;">
+
+  {{/* ── Croix fermer — haut droite ── */}}
+  <button id="lb-close" aria-label="Fermer"
+          style="position:absolute; top:1rem; right:1rem; z-index:1;
+                 background:none; border:none; cursor:pointer; padding:0.5rem;
+                 color: var(--color-mycolor-300); line-height:1;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+
+  {{/* ── Zone image + flèches ── */}}
+  <div style="display:flex; align-items:center; gap:1rem;
+              width:100%; max-width:1200px; padding:0 1rem;">
+
+    <button id="lb-prev" aria-label="Image précédente"
+            style="flex-shrink:0; background:none;
+                   border:0.5px solid var(--color-mycolor-700);
+                   border-radius:50%; width:44px; height:44px; cursor:pointer;
+                   display:flex; align-items:center; justify-content:center;
+                   color: var(--color-mycolor-200);
+                   transition: border-color 0.2s, color 0.2s;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
+    <div style="flex:1; display:flex; align-items:center; justify-content:center;
+                max-height:80vh; overflow:hidden;">
+      <img id="lb-img" src="" alt=""
+           style="max-width:100%; max-height:80vh;
+                  object-fit:contain; border-radius:4px;
+                  transition: opacity 0.2s ease;">
+    </div>
+
+    <button id="lb-next" aria-label="Image suivante"
+            style="flex-shrink:0; background:none;
+                   border:0.5px solid var(--color-mycolor-700);
+                   border-radius:50%; width:44px; height:44px; cursor:pointer;
+                   display:flex; align-items:center; justify-content:center;
+                   color: var(--color-mycolor-200);
+                   transition: border-color 0.2s, color 0.2s;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+  </div>
+
+  {{/* ── Barre basse : titre + compteur centrés ── */}}
+  <div style="position:absolute; bottom:1.25rem; left:0; right:0;
+              display:flex; align-items:center; justify-content:center; gap:1rem;">
+    <span id="lb-title"
+          style="font-size:0.875rem; font-weight:500;
+                 color: var(--color-mycolor-100);
+                 white-space:nowrap; overflow:hidden;
+                 text-overflow:ellipsis; max-width:60%;"></span>
+    <span id="lb-counter"
+          style="font-size:0.8rem; flex-shrink:0;
+                 color: var(--color-mycolor-500);
+                 font-variant-numeric: tabular-nums;"></span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+
+  const images = [
+    {{ range $i, $img := . }}
+    {{ $full := $img.Resize "1600x webp q82" }}
+    { src: {{ $full.RelPermalink }}, title: {{ or $img.Title "" }} }{{ if lt $i (sub (len $galerie) 1) }},{{ end }}
+    {{ end }}
+  ];
+
+  const total = images.length;
+  let current = 0;
+  let touchStartX = 0;
+
+  const lb        = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lb-img');
+  const lbTitle   = document.getElementById('lb-title');
+  const lbCounter = document.getElementById('lb-counter');
+  const lbClose   = document.getElementById('lb-close');
+  const lbPrev    = document.getElementById('lb-prev');
+  const lbNext    = document.getElementById('lb-next');
+
+  function show(index) {
+    current = ((index % total) + total) % total;
+    const item = images[current];
+    lbImg.style.opacity = '0';
+    setTimeout(() => {
+      lbImg.src             = item.src;
+      lbImg.alt             = item.title;
+      lbTitle.textContent   = item.title;
+      lbCounter.textContent = (current + 1) + '\u00a0/\u00a0' + total;
+      lbImg.style.opacity   = '1';
+    }, 150);
+  }
+
+  function open(index) {
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    show(index);
+  }
+
+  function close() {
+    lb.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gallery-thumb').forEach(btn => {
+    btn.addEventListener('click', () => open(parseInt(btn.dataset.index)));
+  });
+
+  lbClose.addEventListener('click', close);
+  lbPrev.addEventListener('click',  () => show(current - 1));
+  lbNext.addEventListener('click',  () => show(current + 1));
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (lb.style.display === 'none') return;
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === 'Escape')     close();
+  });
+
+  lb.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  lb.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) show(current + 1);
+      else          show(current - 1);
+    }
+  }, { passive: true });
+
+})();
+</script>
+
+{{ end }}

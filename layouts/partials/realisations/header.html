@@ -1,0 +1,30 @@
+{{/* ══════════════════════════════════════════
+     EN-TÊTE — tags, titre, description
+     Front matter : tags, h1, title, description
+══════════════════════════════════════════ */}}
+<header class="mb-10">
+
+  {{/* Tags */}}
+  {{ with .Params.tags }}
+  <div class="flex flex-wrap gap-2 mb-4">
+    {{ range . }}
+    <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-mycolor-100 text-mycolor-800 border border-mycolor-200">
+      {{ . }}
+    </span>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{/* Titre */}}
+  <h1 class="text-3xl sm:text-4xl font-semibold text-mycolor-950 leading-tight mb-4">
+    {{ or .Params.h1 .Title }}
+  </h1>
+
+  {{/* Description */}}
+  {{ with .Description }}
+  <p class="text-base text-mycolor-700 leading-relaxed max-w-2xl">
+    {{ . }}
+  </p>
+  {{ end }}
+
+</header>

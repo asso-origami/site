@@ -5,6 +5,11 @@
   <script src="{{ $aos.RelPermalink }}" integrity="{{ $aos.Data.Integrity }}"></script>
 {{ end }}
 
+{{ $glightbox := resources.Get "js/glightbox.js" | minify | fingerprint }}
+{{ if $glightbox }}
+  <script src="{{ $glightbox.RelPermalink }}" integrity="{{ $glightbox.Data.Integrity }}"></script>
+{{ end }}
+
 <script>
   // On utilise window.load pour être certain que TOUT (images, scripts, CSS) est prêt
   window.addEventListener('load', function() {
