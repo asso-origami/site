@@ -117,12 +117,12 @@ title = "Le fauteuil vu de face"
   group = "galerie"
 
 [[resources]]
-src = "fauteuil-demonstration.jpg"
+src = "fauteuil-demonstration-galerie.jpg"
 name = "galerie-08"
 title = "Le fauteuil"
 [resources.params]
-  alt = "un fauteuil roulant motorisé à bas coût réalisé par l'associatio norigam"
-  featured = true
+  alt = "un fauteuil roulant motorisé à bas coût réalisé par l'association origami"
+  group = "galerie"
 
 
 
